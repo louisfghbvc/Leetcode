@@ -1,7 +1,7 @@
-//68ms 17.2MB
+//56ms 12MB
 class Solution {
 public:
-    void dfs(int &k, int &n, int st, vector<vector<int>> &res, vector<int> tmp){
+    void dfs(int &k, int &n, int st, vector<vector<int>> &res, vector<int> &tmp){
         if(tmp.size() == k){
             res.push_back(tmp);
             return;
@@ -14,7 +14,8 @@ public:
     }
     vector<vector<int>> combine(int n, int k) {
         vector<vector<int>> res;
-        dfs(k, n, 1, res, {});
+        vector<int> tmp;
+        dfs(k, n, 1, res, tmp);
         return res;
     }
 };
