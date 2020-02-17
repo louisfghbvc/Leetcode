@@ -1,7 +1,7 @@
-// 12ms 10.8MB
+// 12ms 9.4MB
 class Solution {
 public:
-    void dfs(int st, int &t, int v, vector<int> tmp, vector<vector<int>> &res, vector<int>& arr){
+    void dfs(int st, int &t, int v, vector<int> &tmp, vector<vector<int>> &res, vector<int>& arr){
         if(v == t){
             res.push_back(tmp);
             return;
@@ -15,8 +15,9 @@ public:
     }
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>> res;
+        vector<int> tmp;
         sort(candidates.begin(), candidates.end());
-        dfs(0, target, 0, {}, res, candidates);
+        dfs(0, target, 0, tmp, res, candidates);
         
         return res;
     }
