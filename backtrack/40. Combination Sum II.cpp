@@ -15,15 +15,15 @@ public:
 			while(i < arr.size() - 1 && arr[i] == arr[i + 1]) i++;
 		}
 	} 
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        sort(candidates.begin(), candidates.end());
-        
-        vector<bool> vis(candidates.size(), 0);
-        vector<vector<int>> res;
-        vector<int> tmp;
-        
-        dfs(0, target, res, tmp, vis, candidates, 0);
-        
-        return res;
-    }
+	vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+		sort(candidates.begin(), candidates.end());
+
+		vector<bool> vis(candidates.size(), 0);
+		vector<vector<int>> res;
+		vector<int> tmp;
+
+		dfs(0, target, res, tmp, vis, candidates, 0);
+
+		return res;
+	}
 };
