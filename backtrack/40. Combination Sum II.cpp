@@ -12,7 +12,7 @@ public:
 			dfs(v + arr[i], t, res, tmp, vis, arr, i + 1);
 			tmp.pop_back();
 			vis[i] = false;
-            while(i < arr.size() - 1 && arr[i] == arr[i + 1]) i++;
+			while(i < arr.size() - 1 && arr[i] == arr[i + 1]) i++;
 		}
 	} 
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
