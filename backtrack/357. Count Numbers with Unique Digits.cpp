@@ -1,3 +1,4 @@
+//44ms 8.2MB
 class Solution {
 public:
 	void dfs(int d, int &n, int &used, int &res){
