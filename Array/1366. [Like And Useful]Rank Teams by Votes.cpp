@@ -1,4 +1,4 @@
-//12ms 10.3MB use lambda fast
+//12ms 10.3MB use lambda fast, vector can compare seq
 class Solution {
 public:
     string rankTeams(vector<string>& votes) {
