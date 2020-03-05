@@ -1,4 +1,4 @@
-//816ms 141.9MB
+//816ms 141.9MB, Tricky, Hard to think.
 #define N 100002
 class Solution {
     int t = 0;
