@@ -1,5 +1,5 @@
 # Leetcode
 
-this is me 
+This is me. A newbie. 
 
 https://leetcode.com/louisfghbvc/
