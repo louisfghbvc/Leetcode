@@ -1,4 +1,29 @@
-//string view very fast and easy. but this should use kmp to solve
+//Kmp table. 56ms 20.9MB
+class Solution {
+public:
+    int kmp_table(string s){
+        vector<int> res(s.size(), 0); //every index max pre and suf length
+        int j = 0;
+        for(int i = 1; i < s.size();){
+            if(s[i] == s[j]){
+                res[i] = ++j;
+                i++;
+            }
+            else{
+                if(j != 0)
+                    j = res[j - 1]; //tricky
+                else
+                    i++;
+            }
+        }
+        return res.back();
+    }
+    string longestPrefix(string s) {
+        return s.substr(0, kmp_table(s));
+    }
+};
+
+//string view very fast and easy. but this should use kmp to solve, 588ms 14.9MB
 class Solution {
 public:
     string longestPrefix(string s) {
