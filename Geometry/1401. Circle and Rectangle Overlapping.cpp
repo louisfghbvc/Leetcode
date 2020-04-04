@@ -14,3 +14,14 @@ public:
         return 0;
     }
 };
+
+
+//Super easy math closest point in rectangle
+class Solution {
+public:
+    bool checkOverlap(int r, int xc, int yc, int x1, int y1, int x2, int y2) {
+        int dx = xc - max(x1, min(xc, x2));
+        int dy = yc - max(y1, min(yc, y2));
+        return dx*dx + dy*dy <= r*r;
+    }
+};
