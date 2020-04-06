@@ -25,7 +25,7 @@ public:
         ans[0] = 1;
         for(int i = 1; i <= rowIndex; ++i){
             for(int j = i; j >= 1; --j){
-                ans[j] += ans[j-1];
+                ans[j] += ans[j-1]; //because can't prefix. backward can avoid
             }
         }
         return ans;
