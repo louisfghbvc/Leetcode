@@ -19,3 +19,21 @@ public:
         return mx;
     }
 };
+
+//Optimal. O(k). O(1)
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k) {
+        int n = cardPoints.size();
+        int left = 0, right = 0;
+        for(int i = 0; i < k; ++i) left += cardPoints[i];
+        
+        int mx = left;
+        for(int i = 0; i < k; ++i){
+            left -= cardPoints[k - i - 1];
+            right += cardPoints[n - i - 1];
+            mx = max(mx, left + right);
+        }
+        return mx;
+    }
+};
