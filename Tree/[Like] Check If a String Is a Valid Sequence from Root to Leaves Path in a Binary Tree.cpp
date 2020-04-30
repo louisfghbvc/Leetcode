@@ -1,5 +1,6 @@
 // O(N)
 // DFS. Recursive, case judge.
+// 104ms
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
