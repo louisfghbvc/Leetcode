@@ -1,7 +1,7 @@
 # Leetcode
+Solved Question: 281 / 1425
 
 This is me. A newbie. 
-
 https://leetcode.com/louisfghbvc/
 ```Java
 ├─Array
