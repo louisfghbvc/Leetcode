@@ -3,9 +3,9 @@ Solved Question: 281 / 1425
 
 This is me. A newbie. 
 https://leetcode.com/louisfghbvc/
-```Java
+```
 ├─Array
-│      [1051. Height Checker.cpp](https://github.com/louisfghbvc/Leetcode/blob/master/Array/1051.%20Height%20Checker.cpp)
+│      1051. Height Checker.cpp
 │      1329. Sort the Matrix Diagonally.cpp
 │      1356. Sort Integers by The Number of 1 Bits.cpp
 │      1365. How Many Numbers Are Smaller Than the Current Number.cpp
