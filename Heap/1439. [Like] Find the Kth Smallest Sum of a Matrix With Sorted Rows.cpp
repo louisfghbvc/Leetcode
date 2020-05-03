@@ -1,5 +1,6 @@
 // Solution1. 
 // Very Easy Solution. Just each row add. and maintain size k.
+// O(N*M*Klog(MK))
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& mat, int k) {
@@ -20,4 +21,24 @@ public:
     }
 };
 
-// Solution 2. Priority_queue.
+// Solution 2. Same, Better type, same time complexity, faster
+// O(N*M*Klog(MK)), 548ms
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& mat, int k) {
+        int m = mat.size(), n = mat[0].size();
+        vector<int> ans(1);
+        
+        for(int i = 0; i < m; ++i){
+            vector<int> next;
+            for(int j = 0; j < k && j < ans.size(); ++j){
+                for(int l = 0; l < n; ++l){
+                    next.push_back(ans[j]+mat[i][l]);
+                }
+            }
+            sort(next.begin(), next.end());
+            ans = next;
+        }
+        return ans[k-1];
+    }
+};
