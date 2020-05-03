@@ -7,7 +7,7 @@ public:
         multiset<int> bag;
         for(int i = 0, j = 0; i < nums.size(); ++i){
             bag.insert(nums[i]);
-            while(*--bag.end() - *bag.begin() > limit){
+            while(*bag.rbegin() - *bag.begin() > limit){
                 bag.erase(bag.find(nums[j++]));
             }
             ans = max(ans, i-j+1);
