@@ -24,6 +24,24 @@ public:
     }
 };
 
-// Solution2. Divide And Conquer. hard code.
-// into 4 sub. 
-// not implement yet.
+// Solution2. O(mlogn). care auto can not use. timelimit
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size();
+        for(int i = 0; i < m; ++i){
+            if(search1D(matrix[i], target)) return 1;
+        }
+        return 0;
+    }
+    bool search1D(vector<int> &arr, int target){
+        int l = 0, r = arr.size()-1;
+        while(l <= r){
+            int mid = l+(r-l)/2;
+            if(target > arr[mid]) l = mid+1;
+            else if(target < arr[mid]) r = mid-1;
+            else return 1;
+        }
+        return 0;
+    }
+};
