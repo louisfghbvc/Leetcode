@@ -46,11 +46,12 @@ public:
     }
 };
 
-// this is timelimit. auto is bad. slow. because it is big.
+// Clean code, auto is bad. slow. because it is big.
+// but if you use const and reference. AC.
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        for(auto row : matrix){
+        for(const auto& row : matrix){
             int l = 0, r = row.size()-1;
             while(l <= r){
                 int mid = l + (r-l)/2;
