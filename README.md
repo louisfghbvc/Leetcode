@@ -1,5 +1,5 @@
 # Leetcode
-Solved Question: 281 / 1425
+Solved Question: 316 / 1444
 
 This is me. A newbie. 
 https://leetcode.com/louisfghbvc/
@@ -21,6 +21,10 @@ https://leetcode.com/louisfghbvc/
 │      1409. Queries on a Permutation With Key.cpp
 │      1413. Minimum Value to Get Positive Step by Step Sum.cpp
 │      1424. Diagonal Traverse II.cpp
+│      1431. Kids With the Greatest Number of Candies.cpp
+│      1437. Check If All 1's Are at Least Length K Places Away.cpp
+│      1441. Build an Array With Stack Operations.cpp
+│      169. [Like] Majority Element.cpp
 │      238. [Like]Product of Array Except Self.cpp
 │      717. 1-bit and 2-bit Characters.cpp
 │      Counting Elements.cpp
@@ -36,11 +40,13 @@ https://leetcode.com/louisfghbvc/
 │      216. Combination Sum III.cpp
 │      22. Generate Parentheses.cpp
 │      357. Count Numbers with Unique Digits.cpp
+│      37. [Like] Sudoku Solver.cpp
 │      39. Combination Sum.cpp
 │      40. Combination Sum II.cpp
 │      401. Binary Watch.cpp
 │      46. Permutations.cpp
 │      47. Permutations II.cpp
+│      52. [Like] N-Queens II.cpp
 │      526. Beautiful Arrangement.cpp
 │      77. Combinations.cpp
 │      78. Subsets.cpp
@@ -54,13 +60,17 @@ https://leetcode.com/louisfghbvc/
 │
 ├─Binary Search
 │      1237. Find Positive Integer Solution for a Given Equation.cpp
+│      240. [Like And Useful] Search a 2D Matrix II.cpp
+│      278. First Bad Version.cpp
 │      33. [Like]Search in Rotated Sorted Array.cpp
 │      349. Intersection of Two Arrays.cpp
+│      540. Single Element in a Sorted Array.cpp
 │      852. Peak Index in a Mountain Array.cpp
 │
 ├─Bit Manipulation
 │      136. Single Number.cpp
 │      201. [Like]Bitwise AND of Numbers Range.cpp
+│      476. Number Complement.cpp
 │
 ├─Bitmask
 │      78. Subsets.cpp
@@ -72,10 +82,13 @@ https://leetcode.com/louisfghbvc/
 │      1396. Design Underground System.cpp
 │      146. [Like And Useful]LRU Cache.cpp
 │      155. [Like]Min Stack.cpp
+│      208. [Like And Useful] Implement Trie (Prefix Tree).cpp
+│      [Like] First Unique Number.cpp
 │
 ├─DFS
 │      1391. Check if There is a Valid Path in a Grid.cpp
 │      200. Number of Islands.cpp
+│      733. Flood Fill.cpp
 │
 ├─Dp
 │      1143. [Like]Longest Common Subsequence.cpp
@@ -96,6 +109,8 @@ https://leetcode.com/louisfghbvc/
 │      1416. [Like And Useful]Restore The Array.cpp
 │      1420. [Like And Useful]Build Array Where You Can Find The Maximum Exactly K Comparisons.cpp
 │      1425. [Like And Useful]Constrained Subset Sum.cpp
+│      1434. [Like And Useful] Number of Ways to Wear Different Hats to Each Other.cpp
+│      1444. [Like And Useful] Number of Ways of Cutting a Pizza.cpp
 │      221. [Like And Useful]Maximal Square.cpp
 │      357. Count Numbers with Unique Digits.cpp
 │      5-longest-palindromic-substring.cpp
@@ -105,6 +120,7 @@ https://leetcode.com/louisfghbvc/
 │      64. Minimum Path Sum.cpp
 │      70. Climbing Stairs.cpp
 │      877. [Like And Useful]Stone Game.cpp
+│      95. [Like And Useful] Unique Binary Search Trees II.cpp
 │
 ├─Geometry
 │      1401. Circle and Rectangle Overlapping.cpp
@@ -114,6 +130,7 @@ https://leetcode.com/louisfghbvc/
 │      1361. Validate Binary Tree Nodes.cpp
 │      1368. [Like And UseFul]Minimum Cost to Make at Least One Valid Path in a Grid.cpp
 │      743. [Dijkstra]Network Delay Time.cpp
+│      997. [Like] Find the Town Judge.cpp
 │
 ├─Greedy
 │      1046. Last Stone Weight.cpp
@@ -124,6 +141,7 @@ https://leetcode.com/louisfghbvc/
 │      1400. [Like]Construct K Palindrome Strings.cpp
 │      1405. [Like And Useful]Longest Happy String.cpp
 │      1414. Find the Minimum Number of Fibonacci Numbers Whose Sum Is K.cpp
+│      402. [Like] Remove K Digits.cpp
 │      55. [Like And Useful]Jump Game.cpp
 │      [Like]Leftmost Column with at Least a One.cpp
 │
@@ -131,8 +149,10 @@ https://leetcode.com/louisfghbvc/
 │      1418. Display Table of Food Orders in a Restaurant.cpp
 │      525. [Like And Useful]Contiguous Array.cpp
 │      560. [Like And Useful]Subarray Sum Equals K.cpp
+│      771. Jewels and Stones.cpp
 │
 ├─Heap
+│      1439. [Like] Find the Kth Smallest Sum of a Matrix With Sorted Rows.cpp
 │      703. Kth Largest Element in a Stream.cpp
 │
 ├─Linked List
@@ -142,31 +162,39 @@ https://leetcode.com/louisfghbvc/
 │      876. [Like]Middle of the Linked List.cpp
 │
 ├─Math
+│      1232. Check If It Is a Straight Line.cpp
 │      1362. Closest Divisors.cpp
 │      1363. [Like And Useful]Largest Multiple of Three.cpp
 │      1390. [Useful]Four Divisors.cpp
 │      202. [Like And Useful]Happy Number.cpp
 │      29. [Like]Divide Two Integers.cpp
+│      367. [Like] Valid Perfect Square.cpp
+│      50. Pow(x, n).cpp
 │      728. Self Dividing Numbers.cpp
 │
 ├─Prefix
 │      1352. Product of the Last K Numbers.cpp
 │      1371. [Like And Useful]Find the Longest Substring Containing Vowels in Even Counts.cpp
 │      1403. Minimum Subsequence in Non-Increasing Order.cpp
+│      1442. Count Triplets That Can Form Two Arrays of Equal XOR.cpp
 │
 ├─Recursive
 │      119. [Like]Pascal's Triangle II.cpp
+│      21. [Like] Merge Two Sorted Lists.cpp
 │      509. Fibonacci Number.cpp
+│      779. K-th Symbol in Grammar.cpp
 │
 ├─Sliding Window
 │      1004. [Like and Useful]Max Consecutive Ones III.cpp
 │      1052. Grumpy Bookstore Owner.cpp
 │      1358. [Like and Useful]Number of Substrings Containing All Three Characters.cpp
 │      1423. [Like]Maximum Points You Can Obtain from Cards.cpp
+│      1438. [Like And Useful] Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit.cpp
 │      239. [Like and Useful]Sliding Window Maximum.cpp
 │
 ├─Sort
 │      1387. Sort Integers by The Power Value.cpp
+│      912. Sort an Array.cpp
 │
 ├─String
 │      1108. Defanging an IP Address.cpp
@@ -185,7 +213,12 @@ https://leetcode.com/louisfghbvc/
 │      1417. Reformat The String.cpp
 │      1419. [Like And Useful]Minimum Number of Frogs Croaking.cpp
 │      1422. Maximum Score After Splitting a String.cpp
+│      1432. Max Difference You Can Get From Changing an Integer.cpp
+│      1433. Check If a String Can Break Another String.cpp
+│      1436. Destination City.cpp
 │      344. Reverse String.cpp
+│      383. Ransom Note.cpp
+│      387. First Unique Character in a String.cpp
 │      49. [Like And Useful]Group Anagrams.cpp
 │      551. Student Attendance Record I.cpp
 │      557. Reverse Words in a String III.cpp
@@ -201,12 +234,18 @@ https://leetcode.com/louisfghbvc/
 │
 ├─Tree
 │      1008. [Like And Useful]Construct Binary Search Tree from Preorder Traversal.cpp
+│      104. Maximum Depth of Binary Tree.cpp
+│      124. [Like] Binary Tree Maximum Path Sum.cpp
 │      1372. [Like]Longest ZigZag Path in a Binary Tree.cpp
 │      1373. [Like And Useful]Maximum Sum BST in Binary Tree.cpp
 │      1382. [Like And Useful] Balance a Binary Search Tree.cpp
+│      1443. [Like] Minimum Time to Collect All Apples in a Tree.cpp
 │      543. Diameter of Binary Tree.cpp
 │      700. Search in a Binary Search Tree.cpp
 │      94. [Like]Binary Tree Inorder Traversal.cpp
+│      98. [Like And Useful] Validate Binary Search Tree.cpp
+│      993. Cousins in Binary Tree.cpp
+│      [Like] Check If a String Is a Valid Sequence from Root to Leaves Path in a Binary Tree.cpp
 │
 └─Two Pointers
         15. [Like And Useful]3Sum.cpp
