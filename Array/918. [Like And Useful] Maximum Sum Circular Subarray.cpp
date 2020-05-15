@@ -30,7 +30,7 @@ public:
         for(int j = 1; j <= 2*n; ++j){
             if(n < j-dq.front()) dq.pop_front();
             ans = max(ans, pre[j] - pre[dq.front()]);
-            while(!dq.empty() && pre[dq.back()] >= pre[j])
+            while(!dq.empty() && pre[dq.back()] > pre[j])
                 dq.pop_back();
             dq.push_back(j);
         }
