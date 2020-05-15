@@ -1,4 +1,5 @@
 // solution1. 1D dp subarray. circle can split into total - middle min subarray.
+// tricky.
 class Solution {
 public:
     int maxSubarraySumCircular(vector<int>& A) {
@@ -13,8 +14,8 @@ public:
         return mx > 0 ? max(mx, total-mn): mx;
     }
 };
-// solution2 sliding window. hard to think.
-// Maintain max.
+// solution2 sliding window. brain harder.
+// Maintain deque smallest prefix. get max sum
 class Solution {
 public:
     int maxSubarraySumCircular(vector<int>& A) {
@@ -27,7 +28,7 @@ public:
         deque<int> dq;
         dq.push_back(0);
         for(int j = 1; j <= 2*n; ++j){
-            if(dq.front() < j-n) dq.pop_front();
+            if(n < j-dq.front()) dq.pop_front();
             ans = max(ans, pre[j] - pre[dq.front()]);
             while(!dq.empty() && pre[dq.back()] >= pre[j])
                 dq.pop_back();
