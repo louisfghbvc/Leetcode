@@ -19,3 +19,25 @@ public:
         return res;
     }
 };
+
+// not cut. 64ms 9.9MB
+class Solution {
+public:
+    vector<vector<int>> res;
+    void dfs(vector<int> &tmp, int &n, int &k, int now){
+        if(tmp.size() == k){
+            res.push_back(tmp);
+            return;
+        }
+        for(int i = now+1; i <= n; ++i){
+            tmp.push_back(i);
+            dfs(tmp, n, k, i);
+            tmp.pop_back();
+        }
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> tmp;
+        dfs(tmp, n, k, 0);
+        return res;
+    }
+};
