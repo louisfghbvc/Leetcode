@@ -29,3 +29,33 @@ public:
         return ans;
     }
 };
+
+// Optimal 624ms. string to int
+// and use inlcudes return bool.
+class Solution {
+public:
+    vector<int> peopleIndexes(vector<vector<string>>& favoriteCompanies) {
+        int n = favoriteCompanies.size();
+        unordered_map<string, int> ids;
+        vector<vector<int>> fc(n);
+        for(int i = 0; i < n; ++i){
+            for(auto &cp : favoriteCompanies[i]){
+                if(!ids.count(cp)){
+                    ids[cp] = ids.size();
+                }
+                fc[i].push_back(ids[cp]);
+            }
+            sort(fc[i].begin(), fc[i].end());
+        }
+        vector<int> ans;
+        for(int i = 0; i < n; ++i){
+            bool sb = 0;
+            for(int j = 0; j < n; ++j){
+                if(i == j) continue;
+                sb |= includes(fc[j].begin(), fc[j].end(), fc[i].begin(), fc[i].end());
+            }
+            if(!sb) ans.push_back(i);
+        }
+        return ans;
+    }
+};
