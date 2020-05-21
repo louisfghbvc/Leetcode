@@ -24,3 +24,27 @@ public:
 };
 
 // O(N^2). DP, Impressive...
+// Optimal, dp is simple from min left or top or top-left + 1
+// then sum dp.
+// assume dp[i][j] = 5, means there are 5 squares. just a dp by-product(副產物).
+
+class Solution {
+public:
+    int countSquares(vector<vector<int>>& matrix) {
+        int n = matrix.size(), m = matrix[0].size();
+        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
+        int res = 0;
+        for(int i = 0; i < n; ++i){
+            for(int j = 0; j < m; ++j){
+                if(matrix[i][j] == 1){
+                    dp[i+1][j+1] = min({dp[i][j], dp[i+1][j], dp[i][j+1]}) + 1;
+                    res += dp[i+1][j+1];
+                }
+                else{
+                    dp[i+1][j+1] = 0;
+                }
+            }
+        }
+        return res;
+    }
+};
