@@ -3,17 +3,6 @@
 // space not optimal. a palindromic just even many times(can ignore even) and odd once.
 // O(N).
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
     int ans;
@@ -37,6 +26,24 @@ public:
         ans = 0;
         vector<int> t;
         dfs(root, t);
+        return ans;
+    }
+};
+
+// Space Optimal 216ms 106.5MB.
+class Solution {
+public:
+    int ans;
+    void dfs(TreeNode* root, int cnt){
+        if(!root) return;
+        cnt ^= 1<<(root->val-1);
+        dfs(root->left, cnt); 
+        dfs(root->right, cnt); 
+        if(!root->left && !root->right && __builtin_popcount(cnt) <= 1) ans++;
+    }
+    int pseudoPalindromicPaths (TreeNode* root) {
+        ans = 0;
+        dfs(root, 0);
         return ans;
     }
 };
