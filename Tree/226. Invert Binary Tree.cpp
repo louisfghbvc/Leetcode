@@ -1,5 +1,5 @@
 // swap can reference if is pointer.
-// then recursive. O(logN)
+// then recursive. O(N)
 
 /**
  * Definition for a binary tree node.
