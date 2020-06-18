@@ -1,5 +1,6 @@
 # Leetcode
 Solved Question: 377 / 1483
+Max Rating: 1933
 
 This is me. A newbie. 
 https://leetcode.com/louisfghbvc/
