@@ -1,0 +1,8 @@
+// So XOR and count bits
+
+class Solution {
+public:
+    int hammingDistance(int x, int y) {
+        return __builtin_popcount(x ^ y);
+    }
+};
