@@ -38,3 +38,38 @@ public:
 };
 
 // Solution2 https://www.geeksforgeeks.org/geometric-median/
+// 8ms. Super Fast.
+// Walker Test. 4 direction explore. when not found. update precision. Like Gradient Descendent
+class Solution {
+public:
+    const int dir[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    double getMinDistSum(vector<vector<int>>& positions) {
+        double steps = 100, eps = 1e-6;
+        double res = DBL_MAX;
+        
+        auto f = [&](double x, double y){
+            double dis = 0.0;
+            for(auto &p: positions)
+                dis += sqrt((x-p[0])*(x-p[0])+(y-p[1])*(y-p[1]));
+            return dis;
+        };
+        
+        double px = 0.0, py = 0.0;
+        while(steps > eps){
+            bool found = false;
+            for(int k = 0; k < 4; ++k){
+                double npx = px + steps*dir[k][0];
+                double npy = py + steps*dir[k][1];
+                double d = f(npx, npy);
+                if(d < res){
+                    res = d;
+                    px = npx, py = npy;
+                    found = true;
+                }
+            }
+            if(!found) steps /= 10;
+        }
+        
+        return res;
+    }
+};
