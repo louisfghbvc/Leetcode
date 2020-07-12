@@ -67,7 +67,7 @@ public:
                     found = true;
                 }
             }
-            if(!found) steps /= 10;
+            if(!found) steps /= 10; // test, 10 is ok in this problem, can also use 2. more general
         }
         
         return res;
