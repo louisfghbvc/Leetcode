@@ -67,4 +67,38 @@ public:
     }
 };
 
-// Solution2, O(N).
+// Solution2, O(N * L * L).
+// Very Fast. from bottom up.
+// each level cnt left and right. calculate how many is <= distance
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int ans = 0, d;
+    vector<int> dfs(TreeNode* cur){
+        if(!cur) return {};
+        if(!cur->left && !cur->right) return {0};
+        auto l = dfs(cur->left), r = dfs(cur->right);
+        for(int &x: l) ++x;
+        for(int &x: r) ++x;
+        for(int &a: l)
+            for(int &b: r)
+                if(a + b <= d) ans++;
+        l.insert(l.end(), r.begin(), r.end());
+        return l;
+    }
+    int countPairs(TreeNode* root, int distance) {
+        d = distance;
+        dfs(root);
+        return ans;
+    }
+};
