@@ -4,6 +4,7 @@
 // simulate. foreach char if not in queue.
 // that char is candicate otherwise use 26 as idle.
 // May not be Optimal but think by myself.
+// 1328ms
 
 class Solution {
 public:
@@ -40,5 +41,32 @@ public:
             }
         }
         return res;
+    }
+};
+
+// Very Clean and Concise...
+// O(N). No need to simulate. just max_cnt... and you just greedy...
+// 140ms
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        int fre[26] = {};
+        int mx = 0, mx_cnt = 0;
+        for(auto &c: tasks){
+            fre[c-'A']++;
+            if(mx == fre[c-'A']){
+                mx_cnt++;
+            }
+            else if(mx < fre[c-'A']){
+                mx = fre[c-'A'];
+                mx_cnt = 1;
+            }
+        }
+        int part_cnt = mx - 1;
+        int part_len = n - (mx_cnt - 1);
+        int empty = part_cnt * part_len;
+        int avail = tasks.size() - mx_cnt * mx;
+        int idle = max(0, empty - avail);
+        return tasks.size() + idle;
     }
 };
