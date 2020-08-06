@@ -23,3 +23,26 @@ public:
         return cnt;
     }
 };
+
+
+// DFS, Just visited.
+// O(N^2)
+class Solution {
+public:
+    bool vis[205];
+    int n;
+    void dfs(vector<vector<int>>& M, int u){
+        vis[u] = true;
+        for(int v = 0; v < n; ++v){
+            if(vis[v] || !M[u][v]) continue;
+            dfs(M, v);
+        }
+    }
+    int findCircleNum(vector<vector<int>>& M) {
+        n = M.size();
+        int ans = 0;
+        for(int i = 0; i < n; ++i)
+            if(!vis[i]) dfs(M, i), ans++;
+        return ans;
+    }
+};
