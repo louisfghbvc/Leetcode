@@ -41,4 +41,30 @@ public:
     }
 };
 
-// Solution2
+// Solution2. Optimal. Two Pointer
+// O(N). Autually only record the last index.
+// next from begin to end. try to find right most.
+// when cur == right most. that is a ans. then move pointer.
+class Solution {
+public:
+    vector<int> partitionLabels(string S) {
+        vector<int> res;
+        int n = S.size();
+        int last[26] = {};
+        
+        for(int i = 0; i < n; ++i){
+            last[S[i]-'a'] = i;
+        }
+        
+        int r = 0, l = 0;
+        for(int i = 0; i < n; ++i){
+            r = max(last[S[i]-'a'], r);
+            if(i == r){
+                res.push_back(r-l+1);
+                l = i+1;
+            }
+        }
+        
+        return res;
+    }
+};
