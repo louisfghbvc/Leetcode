@@ -1,5 +1,6 @@
 // O(N).
-// when merge. sort from L,  R most.
+// when merge. sort from small. because no duplicate(only 26 possible). so just sort first.
+// not ISMP. because need all choosen. so not sort R.
 
 class Solution {
 public:
@@ -28,7 +29,6 @@ public:
         }
         
         sort(tmp.begin(), tmp.end(), [](ii &a, ii&b){
-            if(a.first == b.first) return a.second > b.second;
             return a.first < b.first;
         });
         
