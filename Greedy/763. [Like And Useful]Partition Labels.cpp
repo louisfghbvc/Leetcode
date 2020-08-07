@@ -28,10 +28,7 @@ public:
             }
         }
         
-        sort(tmp.begin(), tmp.end(), [](ii &a, ii&b){
-            return a.first < b.first;
-        });
-        
+        sort(tmp.begin(), tmp.end());
         vector<int> res;
         int i = -1;
         for(auto &[L, R]: tmp){
@@ -43,3 +40,5 @@ public:
         return res;
     }
 };
+
+// Solution2
