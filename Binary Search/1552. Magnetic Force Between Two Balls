@@ -1,0 +1,33 @@
+// O(NlogM). Very impressive.
+// so if cnt >= m, means can put m balls and maximum distance right?
+// so bs the ans. to cnt the cnt num >= m.
+// Nice problem...
+
+class Solution {
+public:
+    int maxDistance(vector<int>& arr, int m) {
+        sort(arr.begin(), arr.end());
+        int n = arr.size();
+        
+        function<bool(int)> guess;
+        guess = [&](int d){
+            int cnt = 1, x = arr[0];
+            for(int i = 1; i < n; ++i){
+                if(x + d <= arr[i]){
+                    x = arr[i];
+                    cnt++;
+                }
+            } 
+            return cnt >= m;
+        };
+        
+        int l = 0, r = arr[n-1] - arr[0];
+        while(l <= r){
+            int mid = l + (r-l)/2;
+            // cout << mid << " " << guess(mid) << endl;
+            if(guess(mid)) l = mid+1;
+            else r = mid-1;
+        }
+        return l-1;
+    }
+};
