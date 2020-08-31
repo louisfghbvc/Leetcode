@@ -3,8 +3,7 @@ Solved Question: 552 / 1569
 
 Max Rating: 2008
 
-This is me. A newbie. 
-https://leetcode.com/louisfghbvc/
+[This is me. A newbie.](https://leetcode.com/louisfghbvc/)
 ```
 ├─Array
 │      1002. Find Common Characters.cpp
