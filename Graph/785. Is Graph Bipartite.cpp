@@ -1,4 +1,7 @@
 // A simple 2-color graph problem.
+// use vis array to determine if have colored.
+// first color choose 1. and dfs every node.
+// when node v visited, and check the vis[v] == want color.
 // O(N).
 
 class Solution {
