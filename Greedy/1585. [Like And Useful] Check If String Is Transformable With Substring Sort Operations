@@ -1,0 +1,28 @@
+// OMG, really simple... Not solve in contest.
+// Obviously, sort a substring in ascending. just that swap adjacent right? and can also keep ralative order in s.
+// first, record the index of all digit. no need to simulate.
+// second, iterate t. when a digit can move in the way to current t, can not have a smaller digit in front. because can't swap.
+// O(N).
+
+class Solution {
+public:
+    bool isTransformable(string s, string t) {
+        queue<int> pos[10];
+        
+        int n = s.size();
+        for(int i = 0; i < n; ++i){
+            pos[s[i]-'0'].push(i);
+        }
+        
+        for(char c: t){
+            int d = c-'0';
+            if(pos[d].empty()) return false;
+            int s_pos = pos[d].front(); pos[d].pop();
+            for(int digit = 0; digit < d; ++digit){
+                if(pos[digit].size() && pos[digit].front() < s_pos) return false;
+            }
+        }
+        
+        return true;
+    }
+};
