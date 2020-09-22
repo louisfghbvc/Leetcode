@@ -25,3 +25,27 @@ public:
         return dfs();
     }
 };
+
+
+// iterative. O(N).
+
+class Solution {
+public:
+    TreeNode* recoverFromPreorder(string S) {
+        int n = S.size();
+        vector<TreeNode*> st;
+        for(int i = 0; i < n; ){
+            int level, val;
+            for(level = 0; i < n && S[i] == '-'; ++i, ++level);
+            for(val = 0; i < n && S[i] != '-'; ++i) val = val*10 + (S[i]-'0');
+            TreeNode* cur = new TreeNode(val);
+            while(st.size() > level) st.pop_back();
+            if(st.size()){
+                if(!st.back()->left) st.back()->left = cur;
+                else st.back()->right = cur;
+            }
+            st.push_back(cur);
+        }
+        return st[0]; 
+    }
+};
