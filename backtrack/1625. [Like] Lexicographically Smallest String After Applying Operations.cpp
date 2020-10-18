@@ -1,6 +1,9 @@
 // Enum all case, cuz this is small.
 // use a set to check string is vis or not.
-// O(10*N^2)
+// worst case:
+// if a = 1. add a at most 10 different. because mod 10. each add a need O(N)
+// if gcd(b, N) is 1. rotate at most N different. each rotate need O(N)
+// O(10*N^3)
 
 class Solution {
 public:
