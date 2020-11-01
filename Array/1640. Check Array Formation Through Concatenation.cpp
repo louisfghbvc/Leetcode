@@ -20,3 +20,19 @@ public:
         return i == arr.size();
     }
 };
+
+// use map. O(N).
+class Solution {
+public:
+    bool canFormArray(vector<int>& arr, vector<vector<int>>& pieces) {
+        unordered_map<int, vector<int>> mp;
+        for(auto &p: pieces) mp[p[0]] = p;
+        
+        vector<int> res;
+        for(int x: arr)
+            if(mp.count(x))
+                res.insert(res.end(), mp[x].begin(), mp[x].end());
+        
+        return res == arr;
+    }
+};
