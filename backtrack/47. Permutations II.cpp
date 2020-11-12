@@ -1,29 +1,44 @@
-//24ms 9.9MB
+// 12ms. 9.2MB
+// Main idea is avoid duplicate.
+// so just after backtracking. check next number is same or not. to make sure head(or ...) is not duplicate.
+// and just like origin permutation.
+// vis can use int.
 class Solution {
 public:
-    void dfs(vector<vector<int>> &res, vector<int>& arr, int st, vector<bool> &vis, vector<int> &tmp){
-        if(st == arr.size()){ 
+    vector<vector<int>> res;
+    void dfs(vector<int> &tmp, vector<int>&nums, vector<bool>& vis){
+        if(tmp.size() == nums.size()){
             res.push_back(tmp);
             return;
         }
-        for(int i = 0; i < arr.size(); ++i){
+        for(int i = 0; i < nums.size(); ++i){
             if(vis[i]) continue;
-            vis[i] = true;
-            tmp.push_back(arr[i]);
-            dfs(res, arr, st + 1, vis, tmp);
+            vis[i] = 1;
+            tmp.push_back(nums[i]);
+            dfs(tmp, nums, vis);
             tmp.pop_back();
-            vis[i] = false;
-            while(i < arr.size() - 1 && arr[i] == arr[i + 1]) i++;
+            vis[i] = 0;
+            while(i+1 < nums.size() && nums[i] == nums[i+1]) i++;
         }
     }
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-        vector<vector<int>> res;
-        vector<int> tmp;
-        vector<bool> vis(nums.size(), 0);
         sort(nums.begin(), nums.end());
+        vector<int> tmp;
+        vector<bool> vis(nums.size());
+        dfs(tmp, nums, vis);
+        return res;
+    }
+};
 
-        dfs(res, nums, 0, vis, tmp);
-        
+// STL lib... omg don't know this is avoid duplicate.
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+        do{
+            res.push_back(nums);
+        }while(next_permutation(nums.begin(), nums.end()));
         return res;
     }
 };
