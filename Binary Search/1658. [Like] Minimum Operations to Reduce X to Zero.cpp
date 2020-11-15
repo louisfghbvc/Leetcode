@@ -30,3 +30,26 @@ public:
         return res >= 1e9 ? -1: res;
     }
 };
+
+// O(N). sliding window. O(1) space. like two sum strategy.
+// equal to find the longest subarray. total sum - x.
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int x) {
+        int n = nums.size();
+        int sum = accumulate(nums.begin(), nums.end(), 0) - x;
+        if(sum < 0) return -1;
+        if(sum == 0) return nums.size();
+        
+        int res = -1, l = 0, cur = 0;
+        for(int r = 0; r < n; ++r){
+            cur += nums[r];
+            while(cur >= sum){
+                if(cur == sum) res = max(res, r-l+1);
+                cur -= nums[l++];
+            }
+        }
+        
+        return res < 0 ? -1: n-res;
+    }
+};
