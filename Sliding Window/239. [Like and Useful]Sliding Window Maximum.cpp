@@ -14,3 +14,23 @@ public:
         return ans;
     }
 };
+
+
+// easy to understand. maintain a max queue. say 1 is max. 2 is small max. ...
+// and if queue size > k. check now is that index. and erase.
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        vector<int> res;
+        deque<int> dq;
+        for(int r = 0, l = 0; r < nums.size(); ++r){
+            while(dq.size() && nums[dq.back()] < nums[r]) dq.pop_back();
+            dq.push_back(r);
+            if(dq.size() && r-l+1 > k && dq.front() == l++) dq.pop_front();
+            if(r-l+1 == k) res.push_back(nums[dq.front()]);
+        }
+        return res;
+    }
+};
+
+// lazy. multiset. O(NlogN).
