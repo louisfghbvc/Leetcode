@@ -1,23 +1,6 @@
-/*
+
 // Simple BFS. see the problem example, and observe that the next is just the same level.
 // O(N). Space O(N).
-
-// Definition for a Node.
-class Node {
-public:
-    int val;
-    Node* left;
-    Node* right;
-    Node* next;
-
-    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
-
-    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
-
-    Node(int _val, Node* _left, Node* _right, Node* _next)
-        : val(_val), left(_left), right(_right), next(_next) {}
-};
-*/
 
 class Solution {
 public:
@@ -36,5 +19,32 @@ public:
             }
         }
         return root;
+    }
+};
+
+// O(N). O(1) Space. use next pointer to know bfs.
+
+class Solution {
+public:
+    Node* connect(Node* root) {
+        Node* res = root;
+        Node* leftmost = new Node(0);
+        while(root){
+            Node* cur = leftmost;
+            cur->next = NULL;
+            while(root){
+                if(root->left){
+                    cur->next = root->left;
+                    cur = cur->next;
+                }
+                if(root->right){
+                    cur->next = root->right;
+                    cur = cur->next;
+                }
+                root = root->next;
+            }
+            root = leftmost->next;
+        }
+        return res;
     }
 };
