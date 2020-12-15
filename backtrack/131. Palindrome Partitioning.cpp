@@ -28,3 +28,37 @@ public:
         return res;
     }
 };
+
+
+// check palindrome use dp. O(N2^N)
+class Solution {
+public:
+    
+    vector<vector<string>> res;
+    int n;
+    string s;
+    bool dp[17][17];
+    
+    void dfs(int l, vector<string> &tmp){
+        if(l >= n){
+            res.push_back(tmp);
+            return;
+        }
+        for(int r = l; r < n; ++r){
+            if(s[l] == s[r] && (r-l <= 2 || dp[l+1][r-1])){
+                dp[l][r] = 1;
+                tmp.push_back(s.substr(l, r-l+1));
+                dfs(r+1, tmp);
+                tmp.pop_back();
+            }
+        }
+    }
+    
+    vector<vector<string>> partition(string s) {
+        this->s = s;
+        n = s.size();
+        vector<string> tmp;
+        dfs(0, tmp);
+        return res;
+    }
+};
