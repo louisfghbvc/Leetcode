@@ -30,43 +30,44 @@ public:
     }
 };
 
-// Bi-direction bfs. use set is slow.
+// Bi-direction bfs. use vis as key and swap cur and other. O(N)
 class Solution {
 public:
     int minJumps(vector<int>& arr) {
         int n = arr.size();
         if(n <= 1) return 0;
         
-        vector<bool> vis(n);
+        vector<int> vis(n);
         unordered_map<int, vector<int>> ind;
         for(int i = 0; i < n; ++i) ind[arr[i]].push_back(i);
         
-        unordered_set<int> cur, other;
-        cur.insert(0);
-        other.insert(n-1);
-        vis[0] = vis[n-1] = 1;
+        queue<pair<int, int>> cur, other;
+        cur.push({0, 1});
+        other.push({n-1, 2});
+        vis[0] = 1;
+        vis[n-1] = 2;
         
         int dist = 0;
         while(cur.size()){
             if(cur.size() > other.size()){
                 swap(cur, other);
             }
-            unordered_set<int> nxt;
-            for(const int &u: cur){
+            for(int qs = cur.size()-1; qs >= 0; --qs){
+                auto [u, key] = cur.front(); cur.pop();
                 auto &id = ind[arr[u]]; 
                 id.push_back(u+1);
                 id.push_back(u-1);
 
                 for(int &x: id){
-                    if(other.count(x)) return dist+1;
-                    if(x >= 0 && x < n && !vis[x]){
-                        vis[x] = 1;
-                        nxt.insert(x);
+                    if(x < 0 || x >= n) continue;
+                    if(!vis[x]){
+                        vis[x] = key;
+                        cur.push({x, key});
                     }
+                    else if(vis[x] != key) return dist+1;
                 }
                 id.clear();
             }
-            cur = nxt;
             dist++;
         }
         
