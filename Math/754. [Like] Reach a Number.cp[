@@ -1,0 +1,18 @@
+// Math + Greedy. 
+// O(sqrt(N))
+// 1 + 2 + 3 + -x + x+1 ... so sum - 2*x
+// and if sum - target even. so that can get from that seq
+// odd keep going.
+
+class Solution {
+public:
+    int reachNumber(int target) {
+        if(target < 0) target = -target;
+
+        int sum = 0, step = 0;
+        while(sum < target || (sum - target) % 2 != 0){
+            sum += ++step;
+        }
+        return step;
+    }
+};
