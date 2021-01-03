@@ -1,22 +1,24 @@
+// Super Fast from back. dfs. 4ms.
+// Prune + Space optimal.
+
 class Solution {
 public:
-    void dfs(int &res, vector<bool> &vis, int d, int &n){
-        if(d == 0){
+    int res = 0;
+    int n;
+    void dfs(int i, int vis = 0){
+        if(i == 0){
             res++;
             return;
         }
-        for(int i = n; i >= 1; ++i){
-            if(vis[i-1]) continue;
-            if((i % d && d % i)) continue;
-            vis[i-1] = true;
-            dfs(res, vis, d - 1, n);
-            vis[i-1] = false;
+        for(int j = n; j >= 1; --j){
+            if(vis&(1<<j)) continue;
+            if(i % j && j % i) continue;
+            dfs(i-1, vis | (1<<j));
         }
     }
-    int countArrangement(int N) {
-        vector<bool> vis(N, false);
-        int ans = 0;
-        dfs(ans, vis, N, N);
-        return ans;
+    int countArrangement(int n) {
+        this->n = n;
+        dfs(n);
+        return res;    
     }
 };
