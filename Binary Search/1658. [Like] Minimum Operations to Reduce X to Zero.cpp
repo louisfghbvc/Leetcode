@@ -37,19 +37,45 @@ class Solution {
 public:
     int minOperations(vector<int>& nums, int x) {
         int n = nums.size();
-        int sum = accumulate(nums.begin(), nums.end(), 0) - x;
-        if(sum < 0) return -1;
-        if(sum == 0) return nums.size();
+        int tot = accumulate(nums.begin(), nums.end(), 0);
+        if(tot == x) return n;
+        if(x > tot) return -1;
         
-        int res = -1, l = 0, cur = 0;
-        for(int r = 0; r < n; ++r){
-            cur += nums[r];
-            while(cur >= sum){
-                if(cur == sum) res = max(res, r-l+1);
-                cur -= nums[l++];
-            }
+        int res = -1, tar = tot-x, sum = 0;
+        for(int r = 0, l = 0; r < n; ++r){
+            sum += nums[r];
+            while(sum > tar) sum -= nums[l++];
+            if(sum == tar) res = max(r-l+1, res);
         }
         
-        return res < 0 ? -1: n-res;
+        return res < 0 ? -1 : n - res;
     }
 };
+
+// prefix map since we need to find tot - x.
+// use sum - l = tot - x. let tot - x = t.
+// so just same as find sum - t. two sum tweak.
+// O(N). Space O(N).
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int x) {
+        int target = -x;
+        for(int v: nums) target += v;
+        if(!target) return nums.size();
+        
+        unordered_map<int, int> mp;
+        mp[0] = -1;
+        
+        int res = -1, sum = 0;
+        for(int i = 0; i < nums.size(); ++i){
+            sum += nums[i];
+            if(mp.count(sum - target))
+                res = max(res, i - mp[sum - target]);
+            mp[sum] = i;
+        }
+        
+        
+        return res < 0 ? -1 : nums.size()-res;
+    }
+};
+
