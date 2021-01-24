@@ -1,0 +1,30 @@
+// We know x0^x1^...^xn = 1^2^...^n.
+// and we can turn encoded to x0x1, x0x2 ... x0xn.
+// so just find x0
+// O(N).
+
+class Solution {
+public:
+    vector<int> decode(vector<int>& encoded) {
+        int n = encoded.size()+1;
+        int tot = 0;
+        for(int i = 1; i <= n; ++i) tot ^= i;
+        
+        int entot = encoded[0];
+        for(int i = 1; i < n-1; ++i){
+            // turn to x0xi
+            encoded[i] ^= encoded[i-1];
+            entot ^= encoded[i];
+        }
+        
+        int x0 = entot^tot;
+        vector<int> decoded(n);
+        decoded[0] = x0;
+        
+        for(int i = 1; i < n; ++i){
+            decoded[i] = x0^encoded[i-1];
+        }
+        
+        return decoded;
+    }
+};
