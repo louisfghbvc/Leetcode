@@ -18,3 +18,24 @@ public:
         return 1;
     }
 };
+
+
+// More clean.
+class Solution {
+public:
+    bool kLengthApart(vector<int>& nums, int k) {
+        int fre = -1;
+        bool flag = false;
+        for(int x: nums){
+            if(x) flag = true;
+            if(flag){
+                if(x){
+                    if(fre >= 0 && fre < k) return false;
+                    fre = 0;
+                }
+                else fre++;
+            }
+        }
+        return true;
+    }
+};
