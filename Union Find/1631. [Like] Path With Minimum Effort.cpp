@@ -46,3 +46,34 @@ public:
 };
 
 // Dijkstra. O(MNlogMN). Space Optimal.
+class Solution {
+public:
+    const int dir[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    typedef pair<int, int> ii;
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        int r = heights.size(), c = heights[0].size();
+        
+        vector<vector<int>> dp(r, vector<int>(c, 1e7));
+        dp[0][0] = 0;
+        
+        priority_queue<ii, vector<ii>, greater<ii>> pq;
+        pq.push({0, 0});
+        
+        while(pq.size()){
+            auto [cost, id] = pq.top(); pq.pop();
+            int pr = id/c, pc = id%c;
+            if(pr == r-1 && pc == c-1) return cost;
+            for(int k = 0; k < 4; ++k){
+                int nr = pr + dir[k][0], nc = pc + dir[k][1];
+                if(nr < 0 || nr >= r || nc < 0 || nc >= c) continue;
+                int diff = max(cost, abs(heights[nr][nc] - heights[pr][pc]));
+                if(diff < dp[nr][nc]){
+                    dp[nr][nc] = diff;
+                    pq.push({diff, nr*c + nc});
+                }
+            }
+        }
+        
+        return dp[r-1][c-1];
+    }
+};
