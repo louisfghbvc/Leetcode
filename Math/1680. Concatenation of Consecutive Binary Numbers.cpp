@@ -37,3 +37,18 @@ public:
         return res;
     }
 };
+
+// More faster. O(N)
+// check pow of 2.
+class Solution {
+public:
+    const int mod = 1e9+7;
+    int concatenatedBinary(int n) {
+        long res = 0, len = 0;
+        for(int i = 1; i <= n; ++i){
+            if((i&(i-1)) == 0) len++;
+            res = ((res<<len) | i) % mod;
+        }
+        return res;
+    }
+};
