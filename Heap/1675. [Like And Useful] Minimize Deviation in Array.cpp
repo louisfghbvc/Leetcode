@@ -20,3 +20,27 @@ public:
         return res;
     }
 };
+
+
+// More fast, just use maxheap. Record minimum
+// O(NlogN).
+class Solution {
+public:
+    int minimumDeviation(vector<int>& nums) {
+        priority_queue<int> pq;
+        int mn = INT_MAX;
+        for(int x: nums){
+            int px = x%2 ? x*2 : x;
+            pq.push(px);
+            mn = min(px, mn);
+        }
+        int res = pq.top() - mn;
+        while(pq.top() % 2 == 0){
+            int big = pq.top(); pq.pop();
+            mn = min(big/2, mn);
+            pq.push(big/2);
+            res = min(res, pq.top()-mn);
+        }
+        return res;
+    }
+};
