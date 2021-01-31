@@ -25,3 +25,28 @@ public:
         return res;
     }
 };
+
+
+// simple...
+class Solution {
+public:
+    typedef pair<int, int> ii;
+    map<int, vector<ii>> mp;
+    void dfs(TreeNode* root, int r = 0, int c = 0){
+        if(!root) return;
+        dfs(root->left, r+1, c-1);
+        mp[c].push_back({r, root->val});
+        dfs(root->right, r+1, c+1);
+    }
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        vector<vector<int>> res;
+        dfs(root);
+        for(auto &[k, col]: mp){
+            sort(col.begin(), col.end());
+            vector<int> tmp;
+            for(auto &[r, v]: col) tmp.push_back(v);
+            res.push_back(tmp);
+        }
+        return res;
+    }
+};
