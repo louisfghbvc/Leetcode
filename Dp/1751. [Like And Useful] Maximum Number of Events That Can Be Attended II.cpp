@@ -24,7 +24,7 @@ public:
     }
 };
 
-// O(KNlogN) upper_bound trick...
+// O(KNlogN) upper_bound trick... a is val, b is forward iterator.
 class Solution {
 public:
     vector<vector<int>> dp;
@@ -34,8 +34,9 @@ public:
     int dfs(int i, int k){
         if(k == 0 || i >= n) return 0;
         if(dp[i][k] != -1) return dp[i][k];
-        int j;
-        for(j = i+1; j < n; ++j) if(arr[i][1] < arr[j][0]) break;
+        int j = upper_bound(arr.begin()+i+1, arr.end(), vector<int>{0, arr[i][1], 0}, [](auto &a, auto &b){
+          return a[1] < b[0];  
+        }) - arr.begin();
         return dp[i][k] = max(dfs(i+1, k), arr[i][2] + dfs(j, k-1));
     }
     
