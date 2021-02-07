@@ -1,4 +1,4 @@
-// Meet in the middle.
+// Meet in the middle. use set.
 class Solution {
 public:
     int minAbsDifference(vector<int>& nums, int goal) {
@@ -20,18 +20,11 @@ public:
             int tmp = 0;
             for(int j = b; j < n; ++j) if(S&(1<<(j-b))) tmp += nums[j];
             mn = min(mn, abs(tmp-goal));
-            // cout << "cur "<< tmp << "\n";
             auto f = st.lower_bound(goal-tmp);
             if(f != st.end()){
-                // cout << "find " << *f << "\n";
                 mn = min(mn, abs(tmp + *f - goal));
             }
-            if(next(f) != st.end()){
-                // cout << "find " << *next(f) << "\n";
-                mn = min(mn, abs(tmp + *next(f) - goal));
-            }
-            if(f != st.begin() && f != st.end()){
-                // cout << "find " << *prev(f) << "\n";
+            if(f != st.begin()){
                 mn = min(mn, abs(tmp + *prev(f) - goal));
             }
         }
