@@ -31,3 +31,28 @@ public:
         return dp.back();
     }
 };
+
+
+// Concise. use map O(NlogN). so sort by endtime.
+class Solution {
+public:
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+        vector<int> id;
+        for(int i = 0; i < startTime.size(); ++i) id.push_back(i);
+        sort(id.begin(), id.end(),[&](int a, int b){
+            return endTime[a] < endTime[b];
+        });
+        
+        map<int, int> dp;
+        dp[0] = 0;
+        for(int i: id){
+            auto it = dp.upper_bound(startTime[i]);
+            it--;
+            int p = it->second + profit[i];
+            if (dp.rbegin()->second < p) {
+                dp[endTime[i]] = p;
+            }
+        }
+        return dp.rbegin()->second;
+    }
+};
