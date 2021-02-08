@@ -49,3 +49,42 @@ public:
         return dfs(0, k);
     }
 };
+
+// Bottom up dp. rename time to continous. and use it as graph. and dp.
+// the i means cur time. so should be i+1, since event time is inclusive.
+// So from j-1.
+
+class Solution {
+public:
+    typedef pair<int, int> ii;
+    int maxValue(vector<vector<int>>& events, int k) {
+        vector<int> pos;
+        for(auto &e: events){
+            pos.push_back(e[0]);
+            pos.push_back(e[1]);
+        }
+        sort(pos.begin(), pos.end());
+        pos.erase(unique(pos.begin(), pos.end()), pos.end());
+        
+        int n = pos.size();
+        vector<vector<ii>> g(n);
+        for(auto&e: events){
+            e[0] = lower_bound(pos.begin(), pos.end(), e[0]) - pos.begin();
+            e[1] = lower_bound(pos.begin(), pos.end(), e[1]) - pos.begin();
+            g[e[1]].push_back({e[0], e[2]});
+        }
+        
+        vector<vector<int>> dp(n+1, vector<int>(k+1));
+        for(int i = 0; i < n; ++i){
+            dp[i+1] = dp[i];
+            for(int j = 1; j <= k; ++j){
+                dp[i+1][j] = max(dp[i+1][j], dp[i+1][j-1]);
+                for(auto &[from, val]: g[i]){
+                    dp[i+1][j] = max(dp[i+1][j], dp[from][j-1] + val);
+                }
+            }
+        }
+        
+        return dp[n][k];
+    }
+};
