@@ -61,7 +61,6 @@ public:
         for(int r = 0, l = 0; r < s.size(); ++r){
             cur[s[r]]++;
             if(cur[s[r]] == need[s[r]]) sdiff++;
-            
             while(sdiff == tdiff){
                 if(r-l+1 < ansr-ansl+1){
                     ansl = l;
