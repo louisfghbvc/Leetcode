@@ -1,4 +1,4 @@
-// O(N). Math, Monotonous stack.
+// O(N). Math, Monotonous stack. 
 
 class Solution {
 public:
