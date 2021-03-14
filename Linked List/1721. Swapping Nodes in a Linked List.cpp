@@ -21,3 +21,24 @@ public:
         return res;
     }
 };
+
+// one pass.
+class Solution {
+public:
+    
+    ListNode* swapNodes(ListNode* head, int k) {
+        --k;
+        ListNode* p1 = head;
+        
+        for(int i = 0; i < k; ++i) p1 = p1->next;
+        
+        ListNode* slow = head;
+        ListNode* fast = p1->next;
+        while(fast){
+            slow = slow->next;
+            fast = fast->next;
+        }
+        swap(p1->val, slow->val);
+        return head;
+    }
+};
