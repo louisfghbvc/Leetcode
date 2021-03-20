@@ -1,27 +1,29 @@
+// Use two map. avg O(1).
+
 class UndergroundSystem {
-private:
-    double eps = 1e-5;
-    map<pair<string, string>, pair<int, int>> mp;
-    unordered_map<int, pair<string, int>> idi;
 public:
+    
+    unordered_map<string, unordered_map<string, pair<int, int>>> mp;
+    unordered_map<int, pair<string, int>> user;
+    
     UndergroundSystem() {
-        mp.clear();
-        idi.clear();
+        
     }
     
-    void checkIn(int id, string sN, int t) {
-        idi[id] = {sN, t};
+    void checkIn(int id, string stationName, int t) {
+        user[id] = {stationName, t};
     }
     
-    void checkOut(int id, string sN, int t) {
-        auto tmp = idi[id];
-        mp[{tmp.first, sN}].first += (t - tmp.second);a
-        mp[{tmp.first, sN}].second++; 
+    void checkOut(int id, string stationName, int t) {
+        auto &pre = user[id];
+        auto &cur = mp[pre.first][stationName];
+        cur.first += t - pre.second;
+        cur.second++;
     }
     
-    double getAverageTime(string sS, string eS) {
-        auto t = mp[{sS, eS}];
-        return (double)t.first / t.second;
+    double getAverageTime(string startStation, string endStation) {
+        auto &cur = mp[startStation][endStation];
+        return (double)cur.first / cur.second;
     }
 };
 
