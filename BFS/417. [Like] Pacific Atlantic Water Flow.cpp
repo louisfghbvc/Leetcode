@@ -57,3 +57,42 @@ public:
         return res;
     }
 };
+
+
+// More clean dfs.
+class Solution {
+public:
+    const int dir[4][2] = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        if(!m) return {};
+        int n = matrix[0].size();
+        
+        vector<vector<int>> res;
+        vector<vector<int>> vis(m, vector<int>(n));
+        
+        function<bool(int,int,int)> dfs = [&](int x, int y, int color){
+            if((vis[x][y] & color)) return true;
+            vis[x][y] |= color;
+            if(vis[x][y] == 3) res.push_back({x, y});
+            
+            for(int i = 0; i < 4; ++i){
+                int nx = x+dir[i][0], ny = y+dir[i][1];
+                if(nx < 0 || nx >= m || ny < 0 || ny >= n || matrix[x][y] > matrix[nx][ny]) continue;
+                dfs(nx, ny, color);
+            }
+            return false;
+        };
+        
+        for(int i = 0; i < m; ++i){
+            dfs(i, 0, 1);
+            dfs(i, n-1, 2);
+        }
+        for(int i = 0; i < n; ++i){
+            dfs(0, i, 1);
+            dfs(m-1, i, 2);
+        }
+        
+        return res;
+    }
+};
