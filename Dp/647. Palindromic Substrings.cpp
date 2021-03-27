@@ -39,7 +39,7 @@ public:
         // manacher
         for(int i = 1; i+1 < n; ++i){
             int mir = 2*C-i;
-            if(mir > 1 && i + dp[mir] < R){
+            if(mir >= 1 && i + dp[mir] < R){
                 dp[i] = dp[mir];
                 continue;
             }
