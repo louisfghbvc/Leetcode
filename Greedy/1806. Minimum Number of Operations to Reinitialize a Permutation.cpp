@@ -19,3 +19,20 @@ public:
         return op;
     }
 };
+
+
+// O(N). Think as graph, only move one vertex.
+class Solution {
+public:
+    int reinitializePermutation(int n) {
+        vector<int> graph(n);
+        for(int i = 0; i < n; ++i)
+            graph[i] = i%2 ? n/2 + (i-1)/2 : i/2;
+        int cur = graph[1], ans = 1;
+        while(cur != 1){
+            cur = graph[cur];
+            ans++;
+        }
+        return ans;
+    }
+};
