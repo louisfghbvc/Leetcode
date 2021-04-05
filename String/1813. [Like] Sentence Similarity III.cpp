@@ -38,3 +38,39 @@ public:
         return cnt <= 1;
     }
 };
+
+
+// Just compare prefix and suffix.
+class Solution {
+public:
+    vector<string> ToA(string &s){
+        s += ' ';
+        vector<string> res;
+        string t = "";
+        for(char c: s){
+            if(c == ' '){
+                res.push_back(t);
+                t = "";
+            }  
+            else t += c;
+        }
+        return res;
+    }
+    bool areSentencesSimilar(string sentence1, string sentence2) {
+        vector<string> A = ToA(sentence1);
+        vector<string> B = ToA(sentence2);
+        int al = 0, ar = A.size()-1, bl = 0, br = B.size()-1;
+        while(al <= ar && bl <= br){
+            if(A[al] == B[bl]){
+                al++;
+                bl++;
+            }
+            else if(A[ar] == B[br]){
+                ar--;
+                br--;
+            }
+            else return false;
+        }
+        return true;
+    }
+};
