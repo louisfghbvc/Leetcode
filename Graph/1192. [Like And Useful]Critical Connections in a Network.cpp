@@ -1,32 +1,39 @@
-//816ms 141.9MB, Tricky, Hard to think.
-#define N 100002
 class Solution {
-    int t = 0;
-    vector<int> graph[N];
-    int dfn[N], low[N];
-    void dfs(int u, int p, vector<vector<int>> & res){
-        dfn[u] = low[u] = ++t;
-        for(int i = 0; i < graph[u].size(); ++i){
-            int v = graph[u][i];
-            if(v == p) continue; // not from parent
-            if(!dfn[v]){
-                dfs(v, u, res);
-                low[u] = min(low[u], low[v]);
-                if(low[v] > dfn[u]) res.push_back({u, v}); // critical path
-            }
-            else{
-                low[u] = min(low[u], dfn[v]);
-            }
-        }
-    }
 public:
-    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
-        vector<vector<int>> ans;
-        for(auto x : connections){
-            graph[x[0]].push_back(x[1]);
-            graph[x[1]].push_back(x[0]);
+    vector<vector<int>> g;
+    vector<int> low; // means from child, lowest.
+    vector<int> dfn;
+    vector<vector<int>> res;
+    
+    int t;
+    void dfs(int u, int p = -1){
+        low[u] = dfn[u] = ++t;
+        for(int v: g[u]){
+            if(p == v) continue; // no need from parent. cuz low
+            if(!dfn[v]){
+                dfs(v, u);
+                low[u] = min(low[u], low[v]);
+                if(low[v] > dfn[u]) // u compare smallest from child,  self biggest
+                    res.push_back({u, v}); 
+            }
+            else
+                low[u] = min(low[u], dfn[v]);
         }
-        dfs(0, 0, ans);
-        return ans;
+        
+    }
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        t = 0;
+        g = vector<vector<int>>(n);
+        low = vector<int>(n);
+        dfn = vector<int>(n);
+        
+        for(auto &e: connections){
+            g[e[0]].push_back(e[1]);
+            g[e[1]].push_back(e[0]);
+        }
+        
+        dfs(0);
+        
+        return res;
     }
 };
