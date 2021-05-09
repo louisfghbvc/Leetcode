@@ -1,45 +1,24 @@
+// O(NlogN). pop largest. and use mod. since it multiple of big.
+
 class Solution {
 public:
     bool isPossible(vector<int>& target) {
-        priority_queue<int> pq(begin(target), end(target));
+        int n = target.size();
         long sum = 0;
-        for(auto x: target)
+        priority_queue<int> pq;
+        for(int x: target){
             sum += x;
-        int n = target.size(), t;
+            pq.push(x);
+        }
         while(1){
-            t = pq.top(); pq.pop();
-            if(t == 1) return true;
-            sum -= t;
-            if(t <= sum) return false;
-            t %= sum;
-            sum += t;
-            pq.push(t);
+            int m = pq.top(); pq.pop();
+            sum -= m;
+            if(m == 1 || sum == 1) return true;
+            if(m < sum || sum == 0 || m % sum == 0) return false;
+            m %= sum;
+            sum += m;
+            pq.push(m);
         }
+        return true;
     }
 };
-/** recursive method
-class Solution {
-public:
-    bool isPossible(vector<int>& target) {
-        int mx = 0, id = 0;
-        for(int i = 0; i < target.size(); ++i){
-            if(mx < target[i]){
-                mx = target[i];
-                id = i;
-            }
-        }
-        if(mx == 1) return true;
-        for(int i = 0; i < target.size(); ++i){
-            if(i == id) continue;
-            if(target[i] > mx) return false;
-            mx -= target[i];
-        }
-        target[id] = mx;
-        return isPossible(target);
-    }
-};
-
-
-
-
-**/
