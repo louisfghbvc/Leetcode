@@ -39,3 +39,38 @@ public:
         return res;
     }
 };
+
+
+// Concise dp O(N).
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    // return: no_cam, current covered no_cam, put_cam
+    vector<int> dfs(TreeNode* root){
+        if(!root) return {0, 0, 99999};
+        
+        auto L = dfs(root->left);
+        auto R = dfs(root->right);
+        
+        int p0 = L[1] + R[1]; // subtree covered.
+        int p1 = min(R[2] + min(L[1], L[2]), L[2] + min(R[1], R[2])); // from left or right cam
+        int p2 = 1 + min({L[0], L[1], L[2]}) + min({R[0], R[1], R[2]}); // cur put cam
+        return {p0, p1, p2};
+    }
+    
+    int minCameraCover(TreeNode* root) {
+        auto res = dfs(root);
+        return min(res[1], res[2]);
+    }
+};
