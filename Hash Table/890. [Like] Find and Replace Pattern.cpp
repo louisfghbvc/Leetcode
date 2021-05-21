@@ -31,3 +31,32 @@ public:
         return res;
     }
 };
+
+
+// Awesome Concept. Mapping to the base.
+class Solution {
+public:
+    
+    string Normalize(string s){
+        map<char, char> mp;
+        for(char c: s){
+            if(!mp.count(c)) mp[c] = 'a' + mp.size();
+        }
+        string t = "";
+        for(char c: s)
+            t += mp[c];
+        return t;
+    }
+    
+    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
+        pattern = Normalize(pattern);
+        vector<string> res;
+        for(string &w: words){
+            string t = Normalize(w);
+            if(t == pattern)
+                res.push_back(w);
+        }
+        
+        return res;
+    }
+};
