@@ -42,4 +42,22 @@ public:
     }
 };
 
-// Use map..
+// Use map.. just go from head. O(N).
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> st(nums.begin(), nums.end());
+        
+        int res = 0;
+        for(int x: nums){
+            if(!st.count(x-1)){
+                int add = 0;
+                while(st.count(x + add)){
+                    add++;
+                }
+                res = max(res, add);
+            }
+        }
+        return res;
+    }
+};
