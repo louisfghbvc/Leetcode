@@ -8,7 +8,7 @@ public:
     }
     
     bool book(int start, int end) {
-        auto p = mp.lower_bound(start);
+        auto p = mp.upper_bound(start);
         if(p != mp.end()){
             if(end > p->first) return false;
         }
