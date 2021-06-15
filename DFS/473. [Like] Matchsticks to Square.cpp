@@ -70,3 +70,37 @@ public:
         return dfs(matchsticks, sum);
     }
 };
+
+
+// O(N2^N). Dp + bitmask. same as 673
+class Solution {
+public:
+    
+    bool makesquare(vector<int>& matchsticks) {
+        sort(matchsticks.rbegin(), matchsticks.rend());
+        
+        long sum = accumulate(matchsticks.begin(), matchsticks.end(), 0LL);
+        
+        // length must divisible by 4
+        if(sum % 4) return false;
+        sum /= 4;
+        
+        // largest one > length
+        if(matchsticks[0] > sum) return false;
+        
+        int n = matchsticks.size();
+        vector<int> dp(1<<n, -1);
+        dp[0] = 0; // base case.
+        
+        for(int S = 0; S < 1<<n; ++S){
+            if(dp[S] == -1) continue;
+            for(int i = 0; i < n; ++i){
+                if(!(S>>i&1) && dp[S] + matchsticks[i] <= sum){
+                    dp[S^(1<<i)] = (dp[S] + matchsticks[i]) % sum;
+                }
+            }
+        }
+        
+        return dp.back() == 0;
+    }
+};
