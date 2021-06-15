@@ -29,3 +29,44 @@ public:
         return dfs(0);
     }
 };
+
+
+// 0ms. prune
+class Solution {
+public:
+    vector<bool> vis;
+    bool dfs(vector<int> &arr, int tar, int i = 0, int cur = 0, int d = 0){
+        if(d == 3) return true;
+        if(cur == tar) return dfs(arr, tar, 0, 0, d+1);
+        
+        for(int j = i; j < arr.size(); ++j){
+            if(cur + arr[j] <= tar){
+                if(!vis[j]){
+                    vis[j] = 1;
+                    if(dfs(arr, tar, j + 1, cur + arr[j], d))
+                        return true;
+                    if(cur + arr[j] == tar) return false; // if equal length, impossible.
+                    vis[j] = 0;
+                }
+            }
+        }
+        return false;
+    }
+    
+    bool makesquare(vector<int>& matchsticks) {
+        sort(matchsticks.rbegin(), matchsticks.rend());
+        
+        long sum = accumulate(matchsticks.begin(), matchsticks.end(), 0LL);
+        
+        // length must divisible by 4
+        if(sum % 4) return false;
+        sum /= 4;
+        
+        // largest one > length
+        if(matchsticks[0] > sum) return false;
+        
+        vis = vector<bool>(matchsticks.size());
+        
+        return dfs(matchsticks, sum);
+    }
+};
