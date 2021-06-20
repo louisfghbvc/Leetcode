@@ -31,7 +31,7 @@ public:
     }
 };
 
-// Contest code. extand segment. AC in 12:00 QQ. a little slow
+// Contest code. extand segment. AC in 12:00 QQ. a little slow, but faster than BS
 class Solution {
 public:
     vector<int> minDifference(vector<int>& nums, vector<vector<int>>& queries) {
@@ -42,7 +42,9 @@ public:
             arr.push_back({queries[i][0], queries[i][1], i});
         }
         
-        sort(arr.begin(), arr.end());
+        sort(arr.begin(), arr.end(), [&](auto &a, auto &b){
+            return max(a[0], a[1]) < max(b[0], b[1]);
+        });
         
         vector<int> res(queries.size());
         
@@ -83,6 +85,7 @@ public:
                     }
                     for(int i = r+1; i <= cr; ++i) fre[nums[i]]--;
                 }
+                
                 cl = l, cr = r;
             }
             
