@@ -1,6 +1,6 @@
 # Leetcode
-Solved Question: 1043 / 1879
+Solved Question: 1082 / 1923
 
-Contest Max Rating: 2212pt
+Contest Max Rating: 2279pt
 
 [This is me. A newbie.](https://leetcode.com/louisfghbvc/)
