@@ -62,3 +62,58 @@ public:
         return ans;
     }
 };
+
+
+// No collision, just suffix array, and build lcp. find the maximum lcp.
+// O(NlogNlogN). 448ms. use vector 1488ms.
+class Solution {
+public:
+    constexpr static int N = 3e4+5;
+    int sa[N], rk[N<<1], oldrk[N<<1];
+    
+    bool same(int a, int b, int w){
+        return oldrk[a] == oldrk[b] && oldrk[a+w] == oldrk[b+w];
+    }
+    
+    void build_sa(string s){
+        s += '$';
+        int n = s.size();
+        for(int i = 0; i < n; ++i) sa[i] = i, rk[i] = s[i];
+        for(int w = 1; w < n; w <<= 1){
+            sort(sa, sa + n, [&](int a, int b){
+                return rk[a] == rk[b] ? rk[a+w] < rk[b+w] : rk[a] < rk[b];
+            });
+            memcpy(oldrk, rk, sizeof rk);
+            rk[sa[0]] = 0;
+            for(int i = 1, p = 0; i < n; ++i)
+                rk[sa[i]] = same(sa[i], sa[i-1], w) ? p : ++p;
+        }
+    }
+    
+    string build_lcp(string s){
+        s += '$';
+        int n = s.size();
+        vector<int> lcp(n);
+        
+        int k = 0, mx = 0, pos = 0;
+        for(int i = 0; i+1 < n; ++i){
+            int pi = rk[i];
+            int j = sa[pi-1];
+            while(s[i+k] == s[j+k]) ++k;
+            lcp[pi] = k;
+            if(lcp[pi] > mx){
+                mx = lcp[pi];
+                pos = i;
+            }
+            k = max(0, k-1);
+        }
+        
+        return s.substr(pos, mx);
+    }
+    
+    string longestDupSubstring(string s) {
+        int n = s.size()+1;
+        build_sa(s);
+        return build_lcp(s);
+    }
+};
