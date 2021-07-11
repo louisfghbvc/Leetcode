@@ -35,9 +35,34 @@ public:
     }
 };
 
-/**
- * Your MedianFinder object will be instantiated and called as such:
- * MedianFinder* obj = new MedianFinder();
- * obj->addNum(num);
- * double param_2 = obj->findMedian();
- */
+
+// Use queue. Super clean
+
+class MedianFinder {
+public:
+    /** initialize your data structure here. */
+    priority_queue<int> small; // max heap
+    priority_queue<int, vector<int>, greater<>> big; // min heap
+    
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {
+        small.push(num);
+        big.push(small.top());
+        small.pop();
+        
+        if(small.size()+1 < big.size()){
+            small.push(big.top());
+            big.pop();
+        }
+        
+    }
+    
+    double findMedian() {
+        if(small.size() == big.size())
+            return (small.top() + big.top()) * 1.0 / 2.0;
+        return big.top();
+    }
+};
