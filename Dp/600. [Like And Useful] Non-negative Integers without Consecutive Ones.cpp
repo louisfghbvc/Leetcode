@@ -33,3 +33,35 @@ public:
         return res + 1;
     }
 };
+
+// O(logN). Top down digit dp, easy to understand.
+class Solution {
+public:
+    
+    string s;
+    int dp[32][2][2];
+    int dfs(int i = 0, int prev = 0, bool flag = 0){
+        if(i == s.size()) return 1;
+        int &res = dp[i][prev][flag];
+        if(res != -1) return res;
+        res = 0;
+        int bound = !flag ? s[i] - '0' : 1;
+        for(int k = 0; k <= bound; ++k){
+            if(prev && k) continue;
+            bool nflag = flag || k!=bound;
+            res += dfs(i+1, k, nflag);
+        }
+        return res;
+    }
+    
+    int findIntegers(int n) {
+        s = "";
+        while(n){
+            s += '0' + (n&1);
+            n >>= 1;
+        }
+        reverse(s.begin(), s.end());
+        memset(dp, -1, sizeof dp);
+        return dfs();
+    }
+};
