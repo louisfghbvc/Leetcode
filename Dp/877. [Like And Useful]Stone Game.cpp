@@ -1,22 +1,26 @@
-//Minimax
+// Game dp. O(N^2).
 class Solution {
 public:
-    int memo[505][505][2] = {};
     
-    int dfs(int l, int r, bool alex, vector<int>& piles){
+    vector<int> arr;
+    vector<vector<int>> dp;
+    vector<vector<bool>> vis;
+    
+    int dfs(int l, int r){
         if(l > r) return 0;
-        if(memo[l][r][alex]) return memo[l][r][alex];
-        int res = alex ? INT_MIN : INT_MAX;
-        if(alex){
-            res = max(piles[l] + dfs(l+1, r, 0, piles), piles[r] + dfs(l, r-1, 0, piles));
-        }
-        else{
-            res = min(-piles[l] + dfs(l+1, r, 1, piles), -piles[r] + dfs(l, r-1, 1, piles));
-        }
-        return memo[l][r][alex] = res;
+        if(vis[l][r]) return dp[l][r];
+        vis[l][r] = 1;
+        return dp[l][r] = max(arr[l] - dfs(l+1, r), arr[r] - dfs(l, r-1));
     }
     
     bool stoneGame(vector<int>& piles) {
-        return dfs(0, piles.size()-1, 1, piles) > 0;
+        arr = piles;
+        int n = arr.size();
+        vis = vector<vector<bool>>(n, vector<bool>(n));
+        dp = vector<vector<int>>(n, vector<int>(n));
+        return dfs(0, n-1) > 0;
     }
 };
+
+
+// Backward deduction. since even. if 2 alice always win.
