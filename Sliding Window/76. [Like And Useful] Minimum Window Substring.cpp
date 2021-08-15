@@ -44,35 +44,37 @@ public:
     }
 };
 
-// Optimize use size. O(N).
+// Optimize just compare size. O(N).
 class Solution {
 public:
+    
+    int conv(char c){
+        return isupper(c) ? 26 + c-'A' : c-'a';
+    }
+    
     string minWindow(string s, string t) {
-        vector<int> need(128);
-        int tdiff = 0;
+        int m = s.size();
+        
+        vector<int> fre(52);
+        int cnt = 0;
         for(char c: t){
-            if(need[c] == 0) tdiff++;
-            need[c]++;
+            if(fre[conv(c)]++ == 0) cnt++;
         }
         
-        int ansl = 0, ansr = s.size()+1;
-        vector<int> cur(128);
-        int sdiff = 0;
-        for(int r = 0, l = 0; r < s.size(); ++r){
-            cur[s[r]]++;
-            if(cur[s[r]] == need[s[r]]) sdiff++;
-            while(sdiff == tdiff){
-                if(r-l+1 < ansr-ansl+1){
-                    ansl = l;
-                    ansr = r;
+        int res = 1e9, ans_l = 1e9, ans_r = 0;
+        for(int r = 0, l = 0; r < m; ++r){
+            if(--fre[conv(s[r])] == 0) cnt--;
+            while(cnt == 0){
+                if(res > r-l+1){
+                    res = r-l+1;
+                    ans_l = l, ans_r = r;
                 }
-                char c = s[l++];
-                cur[c]--;
-                if(cur[c] < need[c]) --sdiff;
+                if(fre[conv(s[l])]++ == 0) cnt++;
+                l++;
             }
         }
         
-        if(ansr - ansl + 1 > s.size()) return "";
-        return s.substr(ansl, ansr - ansl + 1);
+        if(ans_l > ans_r) return "";
+        return s.substr(ans_l, ans_r - ans_l+1);
     }
 };
