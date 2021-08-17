@@ -1,5 +1,3 @@
-// dfs, keep track the max node.
-// then count it.
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -11,29 +9,12 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+// O(n)
 class Solution {
 public:
-    int ans;
-    void dfs(TreeNode* root, TreeNode* par){
-        if(!root) return;
-        if(root->val >= par->val){
-            ans++;
-        }
-        if(root->val < par->val){
-            dfs(root->left, par);
-            dfs(root->right, par);
-        }      
-        else{
-            dfs(root->left, root);
-            dfs(root->right, root);
-        }
-            
-        
-        
-    }
-    int goodNodes(TreeNode* root) {
-        ans = 0;
-        dfs(root, root);
-        return ans;
+    int goodNodes(TreeNode* root, int mx = INT_MIN) {
+        if(!root) return 0;
+        return (root->val >= mx) + goodNodes(root->left, max(root->val, mx)) +
+            goodNodes(root->right, max(root->val, mx));
     }
 };
