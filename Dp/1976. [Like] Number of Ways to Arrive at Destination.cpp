@@ -24,15 +24,15 @@ public:
         
         while(pq.size()){
             auto [cost, u] = pq.top(); pq.pop();
-            if(cost > dp[u]) continue; // careful this, may wrong add dp2
+            if(cost > dp[u]) continue; // careful this, prune.
             
             for(auto &[v, w]: g[u]){
-                if(dp[v] > dp[u] + w){
-                    dp[v] = dp[u] + w;
+                if(dp[v] > cost + w){ // should use cost. since if u doesn't have above if. dp[u] can change and get wrong
+                    dp[v] = cost + w;
                     dp2[v] = dp2[u];
                     pq.push({dp[v], v});
                 }
-                else if(dp[v] == dp[u] + w){
+                else if(dp[v] == cost + w){
                     dp2[v] = (dp2[v] + dp2[u]) % mod;
                 }
             }
