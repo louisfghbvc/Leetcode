@@ -33,4 +33,15 @@ public:
     }
 };
 
-// Cantor's Diagonalization
+// Cantor's Diagonalization, each position 1 diff. so that after n. always different.
+class Solution {
+public:
+    string findDifferentBinaryString(vector<string>& nums) {
+        string res(nums.size(), '0');
+        // set res only 1 differ bit
+        for(int i = 0; i < nums.size(); ++i){
+            res[i] = nums[i][i] ^ 1;
+        }
+        return res;
+    }
+};
