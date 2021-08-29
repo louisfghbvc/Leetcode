@@ -1,5 +1,5 @@
-# string top down dp, but autually is advance, so no memo
-# O(NM)
+# autually slow, but pass ?? and faster than dp
+# O(N(M+N))
 class Solution:
     def minWindow(self, s1: str, s2: str) -> str:
         start, L = -1, len(s1)+1
