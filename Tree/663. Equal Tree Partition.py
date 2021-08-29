@@ -22,3 +22,14 @@ class Solution:
         return self.ans
 
 # O(N), use hashmap  
+class Solution:
+    def checkEqualTree(self, root: Optional[TreeNode]) -> bool:
+        seen = defaultdict(int)
+        def dfs(root):
+            if not root: return 0
+            val = root.val + dfs(root.left) + dfs(root.right)
+            seen[val] += 1
+            return val
+        tot = dfs(root)
+        if tot == 0: return (seen[tot // 2] > 1) 
+        return tot % 2 == 0 and tot // 2 in seen
