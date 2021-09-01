@@ -1,0 +1,10 @@
+# Write your MySQL query statement below
+# Awesome
+WITH RECURSIVE cte as
+(
+    SELECT employee_id FROM employees WHERE manager_id = 1 AND employee_id != 1
+    UNION ALL
+    SELECT a.employee_id FROM employees a JOIN cte b ON a.manager_id = b.employee_id
+)
+SELECT employee_id 
+FROM cte
