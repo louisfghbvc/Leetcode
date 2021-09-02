@@ -43,3 +43,13 @@ public:
         return gen(1, n);
     }
 };
+
+// LOL python nested loop is fun
+class Solution:
+    def gen(self, L: int, R: int) -> List[Optional[TreeNode]]:
+        if L > R: return [None]
+        if L == R: return [TreeNode(L)]
+        return [TreeNode(i, l, r) for i in range(L, R+1) for l in self.gen(L, i-1) for r in self.gen(i+1, R)]
+    
+    def generateTrees(self, n: int) -> List[Optional[TreeNode]]:
+        return self.gen(1, n)
