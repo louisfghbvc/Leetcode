@@ -64,3 +64,20 @@ public:
         return s0;
     }
 };
+
+// Solution4. 4 case. buy or not buy, sell or not sell
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        n = len(prices)
+        buy, sell = [0] * n, [0] * n
+        for i in range(n):
+            # buy
+            buy[i] = -prices[i]
+            if i > 1: buy[i] = max(buy[i], sell[i-2] - prices[i])
+            # not buy
+            if i: buy[i] = max(buy[i], buy[i-1])
+            # sell
+            sell[i] = prices[i] + buy[i]
+            # not sell
+            if i: sell[i] = max(sell[i], sell[i-1])
+        return sell[-1]
