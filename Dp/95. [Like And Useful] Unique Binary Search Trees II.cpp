@@ -44,6 +44,24 @@ public:
     }
 };
 
+// Self recursive. clean
+class Solution {
+public:
+    vector<TreeNode*> generateTrees(int r, int l = 1) {
+        if(l > r) return {NULL};
+        if(l == r) return {new TreeNode(l)};
+        vector<TreeNode*> res;
+        for(int i = l; i <= r; ++i){
+            auto left = generateTrees(i-1, l);
+            auto right = generateTrees(r, i+1);
+            for(TreeNode* L: left)
+                for(TreeNode* R: right)
+                    res.push_back(new TreeNode(i, L, R));
+        }
+        return res;
+    }
+};
+
 // LOL python nested loop is fun
 class Solution:
     def gen(self, L: int, R: int) -> List[Optional[TreeNode]]:
