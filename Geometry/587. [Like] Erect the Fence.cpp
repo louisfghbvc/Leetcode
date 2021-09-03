@@ -1,6 +1,4 @@
 // Convell hull O(NlogN). just careful line.
-
-
 class Solution {
 public:
     int cross(vector<int> &o, vector<int> &a,  vector<int> &b){
@@ -29,6 +27,40 @@ public:
         }  
         k--; // begin must put again
         res.resize(k);
+        return res;
+    }
+    
+    vector<vector<int>> outerTrees(vector<vector<int>>& points) {
+        return convex_hull(points);
+    }
+};
+
+// General. 
+class Solution {
+public:
+    int cross(vector<int> &o, vector<int> &a,  vector<int> &b){
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]); 
+    }
+    
+    vector<vector<int>> convex_hull(vector<vector<int>> &points){
+        int n = points.size();
+        sort(points.begin(), points.end());
+        vector<vector<int>> res;
+        // down convex
+        for(int i = 0; i < n; ++i){
+            while(res.size() > 1 && cross(res[res.size()-2], res[res.size()-1], points[i]) < 0) res.pop_back();
+            res.push_back(points[i]);
+        }
+        // line
+        if(res.size() == n)
+            return res;
+        res.pop_back();
+        // up convex
+        for(int i = n-1; i >= 0; --i){
+            while(res.size() > 1 && cross(res[res.size()-2], res[res.size()-1], points[i]) < 0) res.pop_back();
+            res.push_back(points[i]);
+        }
+        res.pop_back();
         return res;
     }
     
