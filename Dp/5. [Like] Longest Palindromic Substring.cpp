@@ -33,6 +33,9 @@ public:
     }
 };
 
+// T: O(N^2). S: O(1)
+// odd even extend
+
 // Cp manacher. fastest. 8ms
 // O(N).
 class Solution {
@@ -61,7 +64,7 @@ public:
         int res2 = 0, p2 = 0;
         vector<int> d2(n); // even
         for(int i = 0, l = 0, r = -1; i < n; ++i){
-            int k = i > r ? 0 : min(d2[l + r - i + 1], r - i + 1);
+            int k = i > r ? 0 : min(d2[l + r - i], r - i + 1); // two mid, can +1
             while(i - k - 1 >= 0 && i + k < n && s[i - 1 - k] == s[i + k]) k++;
             d2[i] = k--;
             if(i + k > r){
