@@ -1,5 +1,4 @@
-// Enumerate all position, O(MN?)
-
+// Enumerate all position, O(MN?). since only put in bound '#'.
 class Solution {
 public:
     bool placeWordInCrossword(vector<vector<char>>& board, string word) {
@@ -39,5 +38,47 @@ public:
         }
         
         return false;
+    }
+};
+
+
+// O(MN), Normalize to left to right, tricky
+// only start with first, or '#'
+class Solution {
+public:
+    
+    bool helper(vector<vector<char>> &grid, const string& word){
+        int m = grid.size(), n = grid[0].size();
+        int l = word.size();
+        for(int i = 0; i < m; ++i){
+            int k = 0;
+            bool ok = true;
+            for(int j = 0; j < n; ++j){
+                if(grid[i][j] == '#'){
+                    if(k == l && ok) return true;
+                    ok = true; // reset
+                    k = 0;
+                }
+                else if(grid[i][j] == ' ') k++;
+                else{
+                    if(k == l || (k<l && grid[i][j] != word[k])) ok = false;
+                    k++;
+                }
+            }
+            if(k == l && ok) return true;
+        }
+        return false;
+    }
+    
+    bool placeWordInCrossword(vector<vector<char>>& board, string word) {
+        string rev(word.rbegin(), word.rend());
+        
+        int m = board.size(), n = board[0].size();
+        vector<vector<char>> tran_board(n, vector<char>(m));
+        for(int i = 0; i < m; ++i)
+            for(int j = 0; j < n; j++)
+                tran_board[j][i] = board[i][j];
+        
+        return helper(board, word) || helper(board, rev) || helper(tran_board, word) || helper(tran_board, rev);
     }
 };
