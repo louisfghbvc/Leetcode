@@ -1,81 +1,59 @@
 // shrink all string into one data structure.
-
+// then backtracking. 
 
 class Solution {
-public:
-    struct trieNode{
-        trieNode* next[26];
-        string word;
-        trieNode(){
-            memset(next, 0, sizeof next);
-            word = "";
-        }
-    };
+private:
+    struct node{
+        node* next[26] = {};
+        string word = "";
+    } *root;
     
-    trieNode* buildTrie(vector<string>& words){
-        trieNode* root = new trieNode();
-        for(auto &wd: words){
-            trieNode *tmp = root;
-            for(int i = 0; i < wd.size(); ++i){
-                if(tmp->next[wd[i]-'a'] == NULL){
-                    tmp->next[wd[i]-'a'] = new trieNode();
-                }
-                tmp = tmp->next[wd[i]-'a'];
-            }
-            tmp->word = wd;
-        }
-        
-        return root;
-    }
-    
-    int m, n;
     vector<string> res;
     vector<vector<char>> g;
-    const int dir[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    int m, n;
     
-    void dfs(int x, int y, trieNode* root){
-        char c = g[x][y];
-        if(c == '#' || root->next[c-'a'] == NULL) return;
-        root = root->next[c-'a'];
-        if(root->word.size()){
-            res.push_back(root->word);
-            root->word = "";
+public:
+    void add(string &s){
+        node* tmp = root;
+        for(char c: s){
+            if(!tmp->next[c-'a']) tmp->next[c-'a'] = new node();
+            tmp = tmp->next[c-'a'];
         }
-        
-        g[x][y] = '#';
-        for(int i = 0; i < 4; ++i){
-            int nx = x+dir[i][0], ny = y+dir[i][1];
-            if(nx < 0 || nx >= m || ny < 0 || ny >= n) continue;
-            dfs(nx, ny, root);
+        tmp->word = s;
+    }
+    
+    void dfs(node* cur, int i, int j){
+        if(!cur) return;
+        if(cur->word.size()){ // find a word
+            res.push_back(cur->word);
+            cur->word = "";
         }
-        g[x][y] = c;
+        if(i < 0 || i >= m || j < 0 || j >= n || g[i][j] == ' ') return;
+        char c = g[i][j];
+        g[i][j] = ' ';
+        node* nxt = cur->next[c - 'a'];
+        dfs(nxt, i-1, j);
+        dfs(nxt, i+1, j);
+        dfs(nxt, i, j-1);
+        dfs(nxt, i, j+1);
+        g[i][j] = c;
     }
     
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
-        
-        m = board.size(), n = board[0].size();
         g = board;
-        trieNode* root = buildTrie(words);
-        // print(root);
+        m = g.size(), n = g[0].size();
+        
+        // build trie
+        root = new node();
+        for(auto &s: words) add(s);
+        
         for(int i = 0; i < m; ++i){
             for(int j = 0; j < n; ++j){
-                dfs(i, j, root);
+                dfs(root, i, j);
             }
         }
         
         return res;
     }
-    
-    void print(trieNode* root){
-        if(root->word != "" ) {
-            cout << root->word << endl;
-            return;
-        }
-        for(int i= 0; i < 26; ++i){
-            if(root->next[i]){
-                print(root->next[i]);
-            }
-        }
-        
-    }
 };
+        
