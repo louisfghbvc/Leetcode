@@ -1,5 +1,5 @@
 // O(N*(2^N) + (2^N)log(2^N))
-// divide two, and combine
+// divide two, and combine, abs only consider b = (tot - 2*a)/2
 
 class Solution {
 public:
@@ -31,22 +31,13 @@ public:
         //  enumerate all possible
         int res = INT_MAX;
         for(int l = 0; l <= n; ++l){
-            vector<int> search1 = second[n-l];
-            for(auto &x: search1) x = 2*x;
-            sort(search1.begin(), search1.end());
-            vector<int> search2 = second[n-l];
-            for(auto &x: search2) x = -2*x;
-            sort(search2.begin(), search2.end());
-            
+            sort(second[n-l].begin(), second[n-l].end());
+            auto &search = second[n-l];
             for(int x: first[l]){
-                int w1 = tot - 2*x, w2 = - tot + 2*x;
-                auto p1 = upper_bound(search1.begin(), search1.end(), w1);
-                if(p1 != search1.end()) res = min(res, abs(w1 - *p1));
-                if(p1 != search1.begin()) res = min(res, abs(w1 - *prev(p1)));
-                
-                auto p2 = upper_bound(search2.begin(), search2.end(), w2);
-                if(p2 != search2.end()) res = min(res, abs(w2 - *p2));
-                if(p2 != search2.begin()) res = min(res, abs(w2 - *prev(p2)));
+                int b = (tot - 2*x) / 2;
+                auto p1 = upper_bound(search.begin(), search.end(), b);
+                if(p1 != search.end()) res = min(res, abs(tot - 2*(x+*p1)));
+                if(p1 != search.begin()) res = min(res, abs(tot - 2*(x+*prev(p1))));
             }
         }
         
