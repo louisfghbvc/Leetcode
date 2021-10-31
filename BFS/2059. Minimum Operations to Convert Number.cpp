@@ -42,3 +42,42 @@ public:
         return -1;
     }
 };
+
+
+// more clean.
+class Solution {
+public:
+    
+    bool valid(int x){
+        return x >= 0 && x <= 1000;
+    }
+    
+    int minimumOperations(vector<int>& nums, int start, int goal) {
+        const int N = 1e4+5;
+        queue<int> q;
+        vector<bool> vis(N);
+        
+        q.push(start);
+        int ops = 0;
+        vis[start] = 1;
+    
+        while(q.size()){
+            for(int qs = q.size()-1; qs >= 0; --qs){
+                int u = q.front(); q.pop();
+                if(u == goal) return ops;
+                for(int x: nums){
+                    for(int nxt: {u+x, u-x, u^x}){
+                        if(valid(nxt) && !vis[nxt]){
+                            vis[nxt] = 1;
+                            q.push(nxt);
+                        }
+                        if(nxt == goal) return ops+1;
+                    }
+                }
+            }
+            ops++;
+        }
+        
+        return -1;
+    }
+};
