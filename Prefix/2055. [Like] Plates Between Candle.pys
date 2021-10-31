@@ -1,0 +1,32 @@
+# prefix sum and bianry search the '|'.
+# O(QlogN)
+
+class Solution:
+    def starsInBars(self, s: str, queries: List[List[int]]) -> List[int]:
+        n = len(s)
+        
+        # do range query O(1)
+        pre = [0] * n 
+        
+        # record bar index
+        idx = [] 
+
+        for i in range(n):
+            if s[i] == '|': idx.append(i)
+            pre[i] = (s[i] == '*')
+            if i: pre[i] += pre[i-1]
+        
+        res = []
+        for l, r in queries:
+            l = bisect_left(idx, l)
+            r = bisect_right(idx, r) - 1
+            if 0 <= l < len(idx) and 0 <= r < len(idx) and l < r:
+                if idx[l]:
+                    res.append(pre[idx[r]] - pre[idx[l]-1])
+                else:
+                    res.append(pre[idx[r]])
+            else: res.append(0)
+        return res
+        
+ 
+ # can use prefix to record the next, prev position 
