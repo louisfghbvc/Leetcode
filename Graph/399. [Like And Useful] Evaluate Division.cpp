@@ -39,3 +39,55 @@ public:
         return res;
     }
 };
+
+
+// Union find, tricky, path compression and value union tricky
+
+class Solution {
+public:
+    
+    string find(string& a){
+        if(!parent.count(a)){
+            val[a] = 1.0;
+            return parent[a] = a;
+        }
+        string pa = parent[a];
+        if(pa == a) return a;
+        string root = find(pa);
+        val[a] *= val[pa];
+        return parent[a] = root;
+    }
+    
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        // e0 / e1 = v[i]
+        // e0 = val[e0] * r1
+        // e1 = val[e1] * r2
+        
+        // build graph
+        for(int i = 0; i < equations.size(); ++i){
+            // union
+            auto r0 = find(equations[i][0]), r1 = find(equations[i][1]);
+            parent[r0] = r1;
+            val[r0] = val[equations[i][1]] * values[i] / val[equations[i][0]];
+        }
+        
+        vector<double> ret;
+        
+        // each is O(1)
+        for(auto &q: queries){
+            if(!parent.count(q[0]) || !parent.count(q[1])){
+                ret.push_back(-1);
+                continue;
+            }
+            if(find(q[0]) != find(q[1])){
+                ret.push_back(-1);
+                continue;
+            }
+            ret.push_back(val[q[0]] / val[q[1]]);
+        }
+        return ret;
+    }
+private:
+    unordered_map<string, string> parent;
+    unordered_map<string, double> val;
+};
