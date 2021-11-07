@@ -1,5 +1,5 @@
 //O(NlogM), Binary Search
-each n, find m is one, record min.
+//each n, find m is one, record min.
 
 //Try to go to left down. O(M+N)
 /**
