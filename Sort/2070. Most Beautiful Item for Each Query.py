@@ -14,7 +14,7 @@ class Solution:
         
         ans = [0] * len(arr)
         i = 0
-        mx = 1
+        mx = 0
         for q, idx in arr:
             while i < len(items) and items[i][0] <= q:
                 mx = max(mx, items[i][1])
