@@ -1,5 +1,4 @@
-// Just Spanning tree. O(N^2).
-
+// Just Spanning tree. O(N^2log(N)).
 class Solution {
 public:
     int p[1005];
@@ -40,5 +39,35 @@ public:
         }
         
         return res;
+    }
+};
+
+
+// prim O(N^2), space: O(N)
+class Solution {
+public:
+    int minCostConnectPoints(vector<vector<int>>& points) {
+        int n = points.size();
+
+        int total_weight = 0;
+        int connected = 0, i = 0;
+        vector<int> min_d(n, 1e9);
+        
+        while(++connected < n){
+            min_d[i] = INT_MAX; // set selected
+            int small_v = i;
+            for(int j = 0; j < n; ++j){
+                if(min_d[j] != INT_MAX){
+                    min_d[j] = min(min_d[j], abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]));
+                    if(min_d[j] < min_d[small_v])
+                        small_v = j;
+                }
+            }
+            
+            total_weight += min_d[small_v];
+            i = small_v;
+        }
+        
+        return total_weight;
     }
 };
