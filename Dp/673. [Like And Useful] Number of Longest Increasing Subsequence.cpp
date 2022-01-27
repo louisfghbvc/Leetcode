@@ -75,3 +75,64 @@ public:
         return arr[max_so_far-1].back().second;
     }
 };
+
+
+// BIT, binary index tree, fun and impressive
+// same as approach1, but fast log search
+struct node{
+    int len, cnt;
+    node(int l=0, int c=0) : len(l), cnt(c) {}
+};
+
+struct BIT{
+    vector<node> arr;
+    int N;
+        
+    BIT (int n) : N(n+1){
+        arr.resize(N);
+    }
+    
+    void add(int x, node s){
+        for(++x; x < N; x += x&-x){
+            if(arr[x].len < s.len)
+                arr[x] = s;
+            else if(arr[x].len == s.len)
+                arr[x].cnt += s.cnt;
+        }
+    }
+    
+    node query(int x){
+        node res(0, 1); // !!! base cnt = 1
+        for(++x; x; x -= x&-x){
+            if(res.len < arr[x].len)
+                res = arr[x];
+            else if(res.len == arr[x].len)
+                res.cnt += arr[x].cnt;
+        }
+        return res;
+    }
+};
+
+class Solution {
+public:
+    int findNumberOfLIS(vector<int>& nums) {
+        // discrete
+        set<int> st(nums.begin(), nums.end());
+        map<int, int> idx;
+        for(int x: st){
+            if(!idx.count(x)) idx[x] = idx.size()+1;
+        }
+        
+        int n = nums.size();
+        BIT bit(n+1);
+
+        for(int &x: nums){
+            x = idx[x];
+            node tmp = bit.query(x-1);
+            tmp.len++;
+            bit.add(x, tmp);
+        }
+        
+        return bit.query(n).cnt;
+    }
+};
