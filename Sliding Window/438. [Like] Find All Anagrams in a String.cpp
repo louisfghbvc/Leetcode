@@ -40,3 +40,32 @@ public:
         return ans;
     }
 };
+
+
+// use O(1) compare
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        // build p frequencies
+        // two pointers approach 
+        
+        vector<int> fre(26);
+        int size = 0;
+        for(char c: p){
+            if(++fre[c-'a'] == 1) size++;
+        }
+        
+        vector<int> res;
+        for(int r = 0, l = 0; r < s.size(); ++r){
+            if(--fre[s[r]-'a'] == 0) size--;
+            while(size == 0){
+                if(r - l + 1 == p.size()) // npte !!!! 
+                    res.push_back(l);
+                if(++fre[s[l]-'a'] == 1) ++size;
+                l++;
+            }  
+        }
+        
+        return res;
+    }
+};
