@@ -106,5 +106,65 @@ public:
 };
 
 
-
-
+// O(mnlogx)
+class Solution {
+public:
+    int maximumMinutes(vector<vector<int>>& grid) {
+        // idea: binary search the minutes we can stay
+        
+        int m = grid.size(), n = grid[0].size();
+        
+        vector<vector<int>> fire_dis(m, vector<int>(n, -1)); // fire to all grid shortest path
+        {
+            queue<int> q;
+            for (int i = 0; i < m; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    if (grid[i][j] == 1) {
+                        q.push(i*n + j);
+                        fire_dis[i][j] = 0;
+                    }
+                }
+            }
+            while (q.size()) {
+                int idx = q.front(); q.pop();
+                int i = idx / n, j = idx % n;
+                for (auto [ni, nj] : {make_pair(i+1, j), {i-1, j}, {i, j+1}, {i, j-1}}) {
+                    if (ni < 0 || nj < 0 || ni >= m || nj >= n || grid[ni][nj] || fire_dis[ni][nj] != -1) continue;
+                    fire_dis[ni][nj] = fire_dis[i][j]+1;
+                    q.push(ni * n + nj);
+                }
+            }
+        }
+        
+        // overall O(M*N*logx)
+        auto valid = [&](int time) {
+            queue<int> q;
+            vector<vector<int>> dis(m, vector<int>(n, -1));
+            // calculate from start point
+            dis[0][0] = time;
+            q.push(0);            
+            while (q.size()) {
+                int idx = q.front(); q.pop();
+                int i = idx / n, j = idx % n;
+                if (i == m-1 && j == n-1) return true;
+                for (auto [ni, nj] : {make_pair(i+1, j), {i-1, j}, {i, j+1}, {i, j-1}}) {
+                    if (ni < 0 || nj < 0 || ni >= m || nj >= n || grid[ni][nj] || dis[ni][nj] != -1) continue;
+                    dis[ni][nj] = dis[i][j]+1;   
+                    if (fire_dis[ni][nj] == -1 || dis[ni][nj] < fire_dis[ni][nj] || (dis[ni][nj] == fire_dis[ni][nj] && ni == m - 1 && nj == n - 1)) {
+                        q.push(ni * n + nj);
+                    }
+                }
+            }
+            return false;
+        };
+        
+        int l = 0, r = 1e9;
+        int ans = -1;
+        while (l <= r) {
+            int mid = (l+r)/2;
+            if (valid(mid)) l = mid+1, ans = mid;
+            else r = mid-1;
+        }
+        return ans;
+    }
+};
