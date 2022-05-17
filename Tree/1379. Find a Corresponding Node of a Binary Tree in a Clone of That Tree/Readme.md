@@ -9,7 +9,7 @@ Find the target node that is in the orginal tree, and return the same position o
 
 ## Way1
 dfs, just moving the both tree
-```cpp=
+```cpp
 class Solution {
 public:
     TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
@@ -29,7 +29,7 @@ public:
 
 ## Way2 - Morris Traverse
 > 注意不能修改tree的結構, 記得還原
-```cpp=
+```cpp
 class Solution {
 public:
     TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
