@@ -47,5 +47,5 @@ public:
 
 | complexity | time | space |
 | - | - | - |
-| Way1 | O(nlogn) | O(n) |
+| Way1 | O(nlogn) | O(1) |
 | Way2 | O(nlogn) | O(n) |
