@@ -58,3 +58,44 @@ public:
         return res;
     }
 };
+
+class Solution {
+public:
+    
+    int countSubstrings(string s) {
+        // goal: count the substring that is palindrome
+        // idea: manacher
+        
+        int n = s.size();
+        int ans = 0;
+        
+        vector<int> d1(n); // odd
+        vector<int> d2(n); // even
+        // d1[i]: length of palindrome from index i of half 
+        // d2[i]: length of palindrome from index i and i-1
+        
+        for(int i = 0, l = 0, r = -1; i < n; ++i){
+            int k = i > r ? 1 : min(d1[l + r - i], r - i + 1);
+            while(i - k >= 0 && i + k < n && s[i + k] == s[i - k]) k++;
+            d1[i] = k--;
+            if(i + k > r){
+                l = i - k;
+                r = i + k;
+            }
+            ans += d1[i];
+        }
+        
+        for(int i = 0, l = 0, r = -1; i < n; ++i){
+            int k = i > r ? 0 : min(d2[l + r - i + 1], r - i + 1); // !!! l-r+i+1, must add 1
+            while(i - k - 1 >= 0 && i + k < n && s[i - 1 - k] == s[i + k]) k++;
+            d2[i] = k--;
+            if(i + k > r){
+                l = i - 1 - k;
+                r = i + k;
+            }
+            ans += d2[i];
+        }
+        
+        return ans;
+    }
+};
