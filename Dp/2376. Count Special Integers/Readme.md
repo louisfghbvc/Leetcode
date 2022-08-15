@@ -1,3 +1,17 @@
+# [2376. Count Special Integers](https://leetcode.com/problems/count-special-integers/)
+
+###### tags: `leetcode` `hard` `dp`
+
+[TOC]
+
+## Description
+We call a positive integer special if all of its digits are distinct.
+
+Given a positive integer n, return the number of special integers that belong to the interval [1, n].
+
+## Way1 - digit dp
+
+```cpp
 class Solution {
 public:
     int countSpecialNumbers(int n) {
@@ -36,3 +50,10 @@ public:
         return dfs(dfs, 0, 0);
     }
 };
+```
+
+## Complexity
+
+| complexity | time | space |
+| - | - | - |
+| Way1 | O(n\*2^d\*d) | O(n\*2^d) |
