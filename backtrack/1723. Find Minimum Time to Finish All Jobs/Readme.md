@@ -102,4 +102,4 @@ public:
 | complexity | time | space |
 | - | - | - |
 | Way1 | O(k^n) | O(n+k) |
-| Way2 | O(k3^n) | O(n\*k) |
+| Way2 | O(k3^n) | O(2^n\*k) |
