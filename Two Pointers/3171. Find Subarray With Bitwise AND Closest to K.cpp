@@ -78,3 +78,30 @@ public:
         return ans;
     }
 };
+
+
+// Approach3. Tricky of monotonic AND/OR/GCD with optimized with array...
+class Solution {
+public:
+    
+    int minimumDifference(vector<int>& nums, int k) {
+        // goal: find the minimum abs AND with k
+        // idea:
+        // consider each index as right
+        // we only have 30 different AND/GCD/OR value... to the left
+        
+        vector<int> pre;
+        int ans = 1e9;
+        for (int x: nums) {
+            // pre is increasing
+            for (int i = 0; i < pre.size(); ++i)
+                pre[i] &= x;
+            pre.push_back(x);
+            pre.erase(unique(pre.begin(), pre.end()), pre.end());
+            for (int p: pre) 
+                ans = min(ans, abs(p-k));
+        }        
+        
+        return ans;
+    }
+};
