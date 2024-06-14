@@ -4,17 +4,29 @@
 
 class Solution {
 public:
-    int p[80005];
-    int find(int x){
-        return p[x] = p[x] < 0 ? x : find(p[x]+1);
+
+    unordered_map<int, int> p;
+    int find(int x) {
+        return p[x] = !p.count(x) ? x : find(p[x]+1);
     }
-    int minIncrementForUnique(vector<int>& A) {
-        memset(p, -1, sizeof p);
-        int res = 0;
-        for(int x : A){
-            res += find(x) - x;
+
+    int minIncrementForUnique(vector<int>& nums) {
+        // goal: find the minimum increment to make element unique
+        // idea:
+        // starting from smallest to largest
+        // 1,1,1,2, 1->2 => 1,[2,2,2]
+        // using the couting sort
+        // we only have n values
+        // idea2:
+        // using union find
+        // basicly, we need to find the next empty
+        // if each value only have one seat, if has allocate just point to next
+
+        int ans = 0;
+        for (int x: nums) {
+            ans += find(x) - x;
         }
-        return res;
+        return ans;
     }
 };
 
