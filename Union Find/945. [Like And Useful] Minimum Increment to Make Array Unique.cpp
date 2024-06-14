@@ -30,23 +30,56 @@ public:
     }
 };
 
-// If observe the same cost when (2=>4, 3=>3) (3=>4, 2=>3). just sort.
-// and when duplicate change.
-// O(NlogN).
-
+// Approach2, sort the array, and compare with previous value
 class Solution {
 public:
-    int minIncrementForUnique(vector<int>& A) {
-        int res = 0;
-        sort(A.begin(), A.end());
-        
-        for(int i = 0; i < A.size(); ++i){
-            if(i && A[i] <= A[i-1]){
-                res += A[i-1]-A[i]+1;
-                A[i] = A[i-1]+1;
-            }    
+
+    int minIncrementForUnique(vector<int>& nums) {
+        // goal: find the minimum increment to make element unique
+        // idea:
+        // sort the array, 
+        // when arr[i-1] >= arr[i], arr[i] is duplicate, need to change to arr[i-1]+1
+        // 2,2,3,3,,5
+        // 2 3,3
+        //     ^
+        // 2 3 4,3
+        //       ^
+        ranges::sort(nums);
+        int ans = 0;
+        for (int i = 1; i < nums.size(); ++i) {
+            if (nums[i-1] >= nums[i]) {
+                int newValue = nums[i-1]+1;
+                ans += newValue - nums[i];
+                nums[i] = newValue;
+            }
         }
+
+        return ans;
+    }
+};
+
+// Approach3, counting sort
+class Solution {
+public:
+    int minIncrementForUnique(vector<int>& nums) {
+        // goal: find the minimum increment to make element unique
+        // idea:
+        // starting from smallest to largest
+        // 1,1,1,2, 1->2 => 1,[2,2,2]
+        // using the couting sort
+        // we only have n values
+
+        vector<int> cnt(2e5+5);
+        int mn = *min_element(nums.begin(), nums.end());
+        for (int x: nums)
+            cnt[x-mn]++;
         
-        return res;
+        int ans = 0;
+        for (int i = 0; i <= 2e5; ++i) {
+            int move = max(cnt[i]-1, 0);
+            cnt[i+1] += move;
+            ans += move;
+        }
+        return ans;
     }
 };
