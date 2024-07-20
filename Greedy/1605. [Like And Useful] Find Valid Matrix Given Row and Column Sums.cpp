@@ -1,6 +1,6 @@
 // Awesome solution.
 // take smaller from row or col. and update row and col.
-// Don't be so confused on how to implement, just think how to backward. if u can forward.
+// we are greedily put as much as possible
 // O(MN)
 
 class Solution {
