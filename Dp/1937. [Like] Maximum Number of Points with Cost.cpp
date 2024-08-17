@@ -37,3 +37,46 @@ public:
 };
 
 // Space can be O(N).
+
+class Solution {
+public:
+    long long maxPoints(vector<vector<int>>& points) {
+        // goal: find the maximum points each row must pick one cells
+        // idea: dp
+        // dp[i][j]: maximum points we can get ending at (i, j)
+        // dp[i][j] = dp[i-1][k] + abs(k-j), k = 0~n-1, 
+        // we can using prefix to speed up the transition -> we can do twice from left and right
+        // dp[i-1][k] = max(dp[i-1][k], dp[i-1][k-1]+1)
+
+        // wait -> we may have easier way
+        // prefix
+        // remove abs, so dp[i][j] = max of (dp[i-1][k] - (j-k)), k<j
+        // remove abs, so dp[i][j] = -j + max of (dp[i-1][k] + k), k<j
+
+        // suf
+        // k>j
+        // max of (dp[i-1][k] - (k-j)) => 
+
+        int m = points.size();
+        int n = points[0].size();
+        vector<long> dp(points[0].begin(), points[0].end());
+
+        for (int i = 1; i < m; ++i) {
+            vector<long> ndp(n);
+            // do prefix
+            long pre = -1e9;
+            for (int j = 0; j < n; ++j) {
+                pre = max(dp[j] + j, pre);
+                ndp[j] = max(ndp[j], points[i][j] - j + pre);
+            }
+            long suf = -1e9;
+            for (int j = n-1; j >= 0; --j) {
+                suf = max(dp[j] - j, suf);
+                ndp[j] = max(ndp[j], points[i][j] + j + suf);
+            }
+            swap(dp, ndp);
+        }
+
+        return ranges::max(dp);
+    }
+};
