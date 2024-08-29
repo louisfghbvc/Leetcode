@@ -1,88 +1,50 @@
 class Solution {
 public:
-    
     vector<int> p;
-    
-    int find(int x){
+    int find(int x) {
         return p[x] < 0 ? x : p[x] = find(p[x]);
     }
-    
-    bool uni(int x, int y){
+    bool uni(int x, int y) {
         x = find(x), y = find(y);
-        if(x == y) return false;
+        if (x == y) return false;
         p[y] = x;
         return true;
     }
-    
-    int removeStones(vector<vector<int>>& stones) {
-        int n = stones.size();
-        p = vector<int>(2*n, -1);
-        
-        unordered_map<int, int> mpx;
-        unordered_map<int, int> mpy;
-        
-        int group = 0;
-        for(int i = 0; i < n; ++i){
-            if(!mpx.count(stones[i][0])) group++, mpx[stones[i][0]] = mpx.size();
-        }
-        
-        for(int i = 0; i < n; ++i){
-            if(!mpy.count(stones[i][1])) group++, mpy[stones[i][1]] = mpx.size() + mpy.size();
-        }
-        
-        for(int i = 0; i < n; ++i){
-            if(uni(mpx[stones[i][0]], mpy[stones[i][1]])) group--;
-        }
-        
-        return n - group;
-    }
-};
 
-
-// find connected components
-// O(N).
-class Solution {
-public:
-    
-    vector<int> p;
-    int find(int x){
-        return p[x] < 0 ? x : p[x] = find(p[x]);
-    }
-    void uni(int x, int y){
-        x = find(x), y = find(y);
-        if(y == x) return;
-        if(p[x] > p[y]) swap(x, y);
-        p[x] += p[y];
-        p[y] = x;
-    }
-    
     int removeStones(vector<vector<int>>& stones) {
-        int n = stones.size();
-        p = vector<int>(n, -1);
-        
-        // union find to union connected components
-        unordered_map<int, int> cols, rows;
-        for(int i = 0; i < n; ++i){
-            if(cols.count(stones[i][1])){
-                uni(i, cols[stones[i][1]]);
-            }
-            else{
-                cols[stones[i][1]] = i;
-            }
-            if(rows.count(stones[i][0])){
-                uni(i, rows[stones[i][0]]);
-            }
-            else{
-                rows[stones[i][0]] = i;
-            }
+        // goal: find out the maximum stones we can remove
+        // if we can remove only if we have another stone in same row/col
+
+        // idea:
+        // using union find?
+        // each (x,y) looks as different root
+        // for the group we always can add group size -1 -> wrong
+        // we can find out the number of root!
+        // the root cannot erase!
+        // e.g
+        //   1 2 3
+        // 1 x o x
+        // 2 o x o
+        // 3 x x o
+
+        unordered_map<int, int> xID, yID;
+        int groups = 0;
+        for (auto &s: stones) {
+            if (!xID.count(s[0]))
+                xID[s[0]] = groups++;
+            if (!yID.count(s[1]))
+                yID[s[1]] = groups++;
+        }
+        p.assign(groups, -1);
+        for (auto &s: stones) {
+            uni(xID[s[0]], yID[s[1]]);
         }
         
-        // ans is sum of each componect group size - 1
-        int res = 0;
-        for(int i = 0; i < n; ++i){
-            if(p[i] < 0) res += abs(p[i]) - 1;
-        }
-        
-        return res;
+        int root = 0;
+        for (int i = 0; i < groups; ++i)
+            if (p[i] < 0)
+                root++;
+
+        return stones.size() - root;
     }
 };
