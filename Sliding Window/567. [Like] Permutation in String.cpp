@@ -16,3 +16,38 @@ public:
         return 0;
     }
 };
+
+// real O(n) solution
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        // goal: find if permutation of s1 is a substring of s2
+        
+        // idea:
+        // s1 = "ab"
+        // s2 = "bac"
+
+        // we just need to record the cnt
+        // if we can find the cnt == s1, find the ans
+        // just using two pointer
+
+        vector<int> cnt(26);
+        int num = 0;
+        for (char c: s1) {
+            if (++cnt[c-'a'] == 1) num++;
+        }
+
+        int n = s2.size();
+        int cur = 0;
+        for (int r = 0, l = 0; r < n; ++r) {
+            if (--cnt[s2[r]-'a'] == 0) cur++; // find a match letter
+            while (cnt[s2[r]-'a'] < 0) { // must move
+                if (cnt[s2[l]-'a']++ == 0) cur--;
+                l++;
+            }
+            if (cur == num) return true;
+        }
+
+        return false;
+    }
+};
