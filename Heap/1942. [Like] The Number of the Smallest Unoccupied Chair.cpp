@@ -34,3 +34,40 @@ public:
         return -1;
     }
 };
+
+
+// Instead of split the array, just sort
+class Solution {
+public:
+    int smallestChair(vector<vector<int>>& times, int targetFriend) {
+        // goal: find the target friend that sit which one chair
+        // idea:
+        // maintain two set
+        // one set for unoccupy, occupy => (leave t, idx)
+
+
+        using T = pair<int, int>;
+        priority_queue<T, vector<T>, greater<>> occupy;
+
+        set<int> chair;
+        for (int i = 0; i < times.size(); ++i)
+            chair.insert(i);
+        
+        auto ans = times[targetFriend];
+        sort(times.begin(), times.end());
+        for (auto &t: times) {
+            int arrive = t[0], leave = t[1];
+            while (occupy.size() && occupy.top().first <= arrive) {
+                chair.insert(occupy.top().second);
+                occupy.pop();
+            }
+            if (t == ans) {
+                return *chair.begin();
+            }
+            int id = *chair.begin(); chair.erase(chair.begin());
+            occupy.push({leave, id});
+        }
+
+        return 0;
+    }
+};
