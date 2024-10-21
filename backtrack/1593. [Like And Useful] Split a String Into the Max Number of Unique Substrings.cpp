@@ -4,27 +4,38 @@
 
 class Solution {
 public:
-    int mx;
-    int n;
-    void dfs(int pos, string &s, unordered_set<string> &st){
-        if(pos == n){
-            mx = max((int)st.size(), mx);
-            return;
-        }
-        string cur = "";
-        for(int i = pos; i < n; ++i){
-            cur += s[i];
-            if(!st.count(cur)){
-                st.insert(cur);
-                dfs(i+1, s, st);
-                st.erase(cur);
-            }
-        }
-    }
     int maxUniqueSplit(string s) {
-        n = s.size();
-        unordered_set<string> st;
-        dfs(0, s, st);
-        return mx;
+        // goal: split the string into substring such that each string is unique
+        // idea:
+        // abc => length 1 has 26
+        // length 2 has 
+        // lets try all possible.
+        // dfs => each letter we can used or not
+        // when split => check out current string if in the set or not
+
+        unordered_set<string> vis;
+        int ans = 0;
+        auto dfs = [&](auto& self, int i, int split) -> void {
+            if (i >= s.size()) {
+                ans = max(ans, split);
+                return;
+            }
+
+            string tmp;
+            for (int j = i; j < s.size(); ++j) {
+                // used
+                tmp += s[j];
+                // split
+                if (!vis.count(tmp)) {
+                    vis.insert(tmp);
+                    self(self, j+1, split+1);
+                    vis.erase(tmp);
+                }
+            }
+
+        };
+        dfs(dfs, 0, 0);
+
+        return ans;
     }
 };
