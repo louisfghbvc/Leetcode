@@ -2,7 +2,7 @@ class Solution {
 public:
     int minOperations(vector<int>& nums) {
         // goal: find the minimum operations to make array non-decreasing
-        // each time we can divide a factor
+        // each time we can divide a largest factor!!!!!!!!!!!!!!!!!!!!!!!!
         
         // idea:
         // if prime, can't divide
@@ -21,24 +21,17 @@ public:
             if (nums[i] > nums[i+1]) {
                 // change nums[i]
                 int sq = sqrt(nums[i]);
-                int mx = -1;
                 for (int p = 2; p <= sq; ++p) {
-                    if (nums[i] % p == 0) {
-                        int a = p, b = nums[i]/p;
-                        if (a <= nums[i+1]) {
-                            mx = max(a, mx);
-                        }
-                        if (b <= nums[i+1]) {
-                            mx = max(b, mx);
-                        }
+                    if (nums[i] % p == 0) { // divide by largest divisor
+                        nums[i] = p;
+                        break;
                     }
                 }
-                if (mx == -1) return -1;
-                nums[i] = mx;
+                if (nums[i] > nums[i+1]) return -1;
                 ans++;
             }
         }
-        
+
         return ans;
     }
 };
